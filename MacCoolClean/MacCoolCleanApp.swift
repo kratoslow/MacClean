@@ -1,15 +1,15 @@
 //
-//  MacCleanApp.swift
-//  MacClean
+//  MacCoolCleanApp.swift
+//  MacCoolClean
 //
-//  A beautiful macOS utility for cleaning up your Mac
+//  A beautiful macOS utility for cleaning up your Mac 😎
 //
 
 import SwiftUI
 import StoreKit
 
 @main
-struct MacCleanApp: App {
+struct MacCoolCleanApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var storeManager = StoreManager.shared
     @StateObject private var fileScanner = FileScanner.shared
@@ -57,7 +57,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func showFullDiskAccessAlert() {
         let alert = NSAlert()
         alert.messageText = "Full Disk Access Required"
-        alert.informativeText = "MacClean needs Full Disk Access to scan all files on your Mac. Please enable it in System Settings > Privacy & Security > Full Disk Access."
+        alert.informativeText = "MacCoolClean needs Full Disk Access to scan all files on your Mac. Please enable it in System Settings > Privacy & Security > Full Disk Access."
         alert.alertStyle = .warning
         alert.addButton(withTitle: "Open Settings")
         alert.addButton(withTitle: "Later")

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CCC"
-               BuildableName = "MacClean.app"
-               BlueprintName = "MacClean"
-               ReferencedContainer = "container:MacClean.xcodeproj">
+               BuildableName = "MacCoolClean.app"
+               BlueprintName = "MacCoolClean"
+               ReferencedContainer = "container:MacCoolClean.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CCC"
-            BuildableName = "MacClean.app"
-            BlueprintName = "MacClean"
-            ReferencedContainer = "container:MacClean.xcodeproj">
+            BuildableName = "MacCoolClean.app"
+            BlueprintName = "MacCoolClean"
+            ReferencedContainer = "container:MacCoolClean.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -67,9 +67,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CCC"
-            BuildableName = "MacClean.app"
-            BlueprintName = "MacClean"
-            ReferencedContainer = "container:MacClean.xcodeproj">
+            BuildableName = "MacCoolClean.app"
+            BlueprintName = "MacCoolClean"
+            ReferencedContainer = "container:MacCoolClean.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

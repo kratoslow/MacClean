@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		001 /* MacCleanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100; };
+		001 /* MacCoolCleanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100; };
 		002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101; };
 		003 /* StorageOverviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102; };
 		004 /* ScanControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103; };
@@ -23,7 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		100 /* MacCleanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacCleanApp.swift; sourceTree = "<group>"; };
+		100 /* MacCoolCleanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacCoolCleanApp.swift; sourceTree = "<group>"; };
 		101 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		102 /* StorageOverviewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageOverviewCard.swift; sourceTree = "<group>"; };
 		103 /* ScanControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanControlsView.swift; sourceTree = "<group>"; };
@@ -37,8 +37,8 @@
 		200 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		201 /* StoreKit.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreKit.storekit; sourceTree = "<group>"; };
 		300 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		301 /* MacClean.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MacClean.entitlements; sourceTree = "<group>"; };
-		AAA /* MacClean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacClean.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		301 /* MacCoolClean.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MacCoolClean.entitlements; sourceTree = "<group>"; };
+		AAA /* MacCoolClean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacCoolClean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +55,7 @@
 		ROOT /* Root */ = {
 			isa = PBXGroup;
 			children = (
-				SRC /* MacClean */,
+				SRC /* MacCoolClean */,
 				PRODUCTS /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,23 +63,23 @@
 		PRODUCTS /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AAA /* MacClean.app */,
+				AAA /* MacCoolClean.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		SRC /* MacClean */ = {
+		SRC /* MacCoolClean */ = {
 			isa = PBXGroup;
 			children = (
-				100 /* MacCleanApp.swift */,
+				100 /* MacCoolCleanApp.swift */,
 				VIEWS /* Views */,
 				MODELS /* Models */,
 				200 /* Assets.xcassets */,
 				201 /* StoreKit.storekit */,
 				300 /* Info.plist */,
-				301 /* MacClean.entitlements */,
+				301 /* MacCoolClean.entitlements */,
 			);
-			path = MacClean;
+			path = MacCoolClean;
 			sourceTree = "<group>";
 		};
 		VIEWS /* Views */ = {
@@ -109,9 +109,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CCC /* MacClean */ = {
+		CCC /* MacCoolClean */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FFF /* Build configuration list for PBXNativeTarget "MacClean" */;
+			buildConfigurationList = FFF /* Build configuration list for PBXNativeTarget "MacCoolClean" */;
 			buildPhases = (
 				DDD /* Sources */,
 				BBB /* Frameworks */,
@@ -121,9 +121,9 @@
 			);
 			dependencies = (
 			);
-			name = MacClean;
-			productName = MacClean;
-			productReference = AAA /* MacClean.app */;
+			name = MacCoolClean;
+			productName = MacCoolClean;
+			productReference = AAA /* MacCoolClean.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -141,7 +141,7 @@
 					};
 				};
 			};
-			buildConfigurationList = GGG /* Build configuration list for PBXProject "MacClean" */;
+			buildConfigurationList = GGG /* Build configuration list for PBXProject "MacCoolClean" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -154,7 +154,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CCC /* MacClean */,
+				CCC /* MacCoolClean */,
 			);
 		};
 /* End PBXProject section */
@@ -176,7 +176,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				001 /* MacCleanApp.swift in Sources */,
+				001 /* MacCoolCleanApp.swift in Sources */,
 				002 /* ContentView.swift in Sources */,
 				003 /* StorageOverviewCard.swift in Sources */,
 				004 /* ScanControlsView.swift in Sources */,
@@ -316,7 +316,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = MacClean/MacClean.entitlements;
+				CODE_SIGN_ENTITLEMENTS = MacCoolClean/MacCoolClean.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -325,7 +325,7 @@
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = MacClean/Info.plist;
+				INFOPLIST_FILE = MacCoolClean/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -345,7 +345,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = MacClean/MacClean.entitlements;
+				CODE_SIGN_ENTITLEMENTS = MacCoolClean/MacCoolClean.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -353,7 +353,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = MacClean/Info.plist;
+				INFOPLIST_FILE = MacCoolClean/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -371,7 +371,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		GGG /* Build configuration list for PBXProject "MacClean" */ = {
+		GGG /* Build configuration list for PBXProject "MacCoolClean" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DEBUG_PROJECT /* Debug */,
@@ -380,7 +380,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FFF /* Build configuration list for PBXNativeTarget "MacClean" */ = {
+		FFF /* Build configuration list for PBXNativeTarget "MacCoolClean" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DEBUG_TARGET /* Debug */,

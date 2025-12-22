@@ -306,7 +306,7 @@ def main():
     # Icon sizes needed for macOS
     sizes = [16, 32, 64, 128, 256, 512, 1024]
     
-    output_dir = "MacClean/Assets.xcassets/AppIcon.appiconset"
+    output_dir = "MacCoolClean/Assets.xcassets/AppIcon.appiconset"
     os.makedirs(output_dir, exist_ok=True)
     
     print("🧊 Generating MacCoolClean icons...")

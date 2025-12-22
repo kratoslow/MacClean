@@ -340,7 +340,7 @@ struct FreeTierInfo: View {
                 
                 Spacer()
                 
-                Text("\(storeManager.remainingFreeScans)/5")
+                Text("\(storeManager.remainingFreeScans) left")
                     .font(.system(size: 13, weight: .bold))
                     .foregroundColor(storeManager.remainingFreeScans > 0 ? Color(hex: "28c840") : Color(hex: "ff5f57"))
             }

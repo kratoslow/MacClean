@@ -1,223 +1,234 @@
 #!/usr/bin/env python3
 """
-Generate MacCoolClean app icons - Clean 3D Mac Mini style with a smile
+Generate MacCoolClean app icons - Cute 3D robot style matching reference
 """
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFilter
 import os
 import math
 
-def create_clean_mac_icon(size):
-    """Create a clean, 3D Mac Mini style icon with a friendly smile"""
+def draw_rounded_rect(draw, bounds, radius, fill):
+    """Draw a rounded rectangle with proper corners"""
+    x1, y1, x2, y2 = bounds
+    draw.rounded_rectangle(bounds, radius=radius, fill=fill)
+
+def create_robot_icon(size):
+    """Create a cute 3D robot icon matching the reference image"""
     img = Image.new('RGBA', (size, size), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
     
     s = size / 512  # Scale factor
+    cx, cy = size // 2, size // 2
     
-    # === BACKGROUND - Clean gradient (soft blue-gray) ===
+    # === BACKGROUND - Soft blue gradient ===
     for y in range(size):
         ratio = y / size
-        # Soft gradient from light blue-gray to slightly darker
-        r = int(70 + ratio * 20)
-        g = int(130 + ratio * 20)
-        b = int(180 + ratio * 20)
+        r = int(120 + ratio * 30)   # ~120 -> 150
+        g = int(160 + ratio * 30)   # ~160 -> 190
+        b = int(220 + ratio * 15)   # ~220 -> 235
         draw.line([(0, y), (size, y)], fill=(r, g, b, 255))
     
-    # === MAIN MAC MINI BODY ===
-    # Center position
-    cx, cy = size // 2, int(size * 0.48)
+    # === FLOOR REFLECTION (subtle) ===
+    floor_y = int(420 * s)
+    for y in range(floor_y, size):
+        ratio = (y - floor_y) / (size - floor_y)
+        alpha = int(30 * (1 - ratio))
+        draw.line([(0, y), (size, y)], fill=(100, 140, 180, alpha))
     
-    # Mac Mini dimensions (rounded rectangle, 3D look)
-    body_width = int(280 * s)
-    body_height = int(180 * s)
-    body_depth = int(40 * s)  # 3D depth
-    corner_radius = int(35 * s)
+    # === SHADOW under robot ===
+    shadow_y = int(400 * s)
+    shadow_width = int(200 * s)
+    shadow_height = int(30 * s)
+    for i in range(int(40 * s), 0, -1):
+        alpha = int(25 * (1 - i / (40 * s)))
+        draw.ellipse([
+            cx - shadow_width//2 - i, shadow_y - shadow_height//2 + i//2,
+            cx + shadow_width//2 + i, shadow_y + shadow_height//2 + i//2
+        ], fill=(50, 80, 120, alpha))
     
-    # Calculate body bounds
-    body_left = cx - body_width // 2
-    body_right = cx + body_width // 2
-    body_top = cy - body_height // 2
-    body_bottom = cy + body_height // 2
+    # === SIDE EARS (left and right) ===
+    ear_width = int(35 * s)
+    ear_height = int(50 * s)
+    ear_y = int(180 * s)
+    body_left = int(100 * s)
+    body_right = int(412 * s)
     
-    # === 3D SHADOW (soft) ===
-    shadow_offset = int(15 * s)
-    for i in range(int(20 * s), 0, -1):
-        alpha = int(40 * (1 - i / (20 * s)))
-        draw.rounded_rectangle(
-            [body_left + shadow_offset + i//2, body_top + shadow_offset + i//2, 
-             body_right + shadow_offset + i//2, body_bottom + body_depth + shadow_offset + i//2],
-            radius=corner_radius,
-            fill=(0, 0, 0, alpha)
-        )
-    
-    # === 3D SIDE (depth) - darker aluminum ===
+    # Left ear - with 3D shading
+    left_ear_x = body_left - ear_width + int(10 * s)
+    # Darker back
     draw.rounded_rectangle(
-        [body_left, body_top + body_depth, body_right, body_bottom + body_depth],
-        radius=corner_radius,
-        fill=(160, 165, 175, 255)
+        [left_ear_x, ear_y, left_ear_x + ear_width, ear_y + ear_height],
+        radius=int(15 * s),
+        fill=(180, 185, 195, 255)
+    )
+    # Lighter front
+    draw.rounded_rectangle(
+        [left_ear_x + 5*s, ear_y + 5*s, left_ear_x + ear_width - 2*s, ear_y + ear_height - 5*s],
+        radius=int(12 * s),
+        fill=(210, 215, 225, 255)
     )
     
-    # === MAIN BODY - Aluminum gradient ===
-    # Draw the main face with gradient
-    for i in range(int(body_top), int(body_bottom)):
-        ratio = (i - body_top) / (body_bottom - body_top)
-        # Aluminum gradient - light at top, slightly darker at bottom
-        gray = int(220 - ratio * 30)
-        draw.line([(body_left, i), (body_right, i)], fill=(gray, gray, gray + 5, 255))
+    # Right ear
+    right_ear_x = body_right - int(10 * s)
+    draw.rounded_rectangle(
+        [right_ear_x, ear_y, right_ear_x + ear_width, ear_y + ear_height],
+        radius=int(15 * s),
+        fill=(180, 185, 195, 255)
+    )
+    draw.rounded_rectangle(
+        [right_ear_x + 2*s, ear_y + 5*s, right_ear_x + ear_width - 5*s, ear_y + ear_height - 5*s],
+        radius=int(12 * s),
+        fill=(210, 215, 225, 255)
+    )
     
-    # Redraw with rounded corners (clip)
-    # Create a mask and apply
+    # === MAIN BODY (rounded squircle) ===
+    body_top = int(80 * s)
+    body_bottom = int(380 * s)
+    body_radius = int(70 * s)
+    
+    # Body shadow (3D effect)
+    for i in range(int(15*s), 0, -1):
+        alpha = int(20 * (1 - i/(15*s)))
+        draw.rounded_rectangle(
+            [body_left + i, body_top + i, body_right + i, body_bottom + i],
+            radius=body_radius,
+            fill=(100, 120, 150, alpha)
+        )
+    
+    # Main body gradient (light gray/white)
+    # Draw base
     draw.rounded_rectangle(
         [body_left, body_top, body_right, body_bottom],
-        radius=corner_radius,
-        outline=(200, 200, 205, 255),
+        radius=body_radius,
+        fill=(235, 238, 245, 255)
+    )
+    
+    # Add gradient overlay (lighter at top)
+    for i in range(int(body_top), int(body_bottom)):
+        ratio = (i - body_top) / (body_bottom - body_top)
+        # Lighter at top, slightly darker at bottom
+        brightness = int(250 - ratio * 25)
+        alpha = int(180 - ratio * 100)
+        draw.line(
+            [body_left + body_radius//2, i, body_right - body_radius//2, i],
+            fill=(brightness, brightness, brightness + 5, alpha)
+        )
+    
+    # Redraw outline for clean edges
+    draw.rounded_rectangle(
+        [body_left, body_top, body_right, body_bottom],
+        radius=body_radius,
+        outline=(200, 205, 215, 255),
         width=int(2 * s)
     )
     
-    # === SCREEN AREA (dark, glossy) ===
-    screen_margin = int(25 * s)
-    screen_left = body_left + screen_margin
-    screen_right = body_right - screen_margin
-    screen_top = body_top + screen_margin
-    screen_bottom = body_bottom - int(50 * s)
-    screen_radius = int(15 * s)
+    # === SCREEN (dark rounded rectangle) ===
+    screen_margin_x = int(35 * s)
+    screen_margin_top = int(40 * s)
+    screen_left = body_left + screen_margin_x
+    screen_right = body_right - screen_margin_x
+    screen_top = body_top + screen_margin_top
+    screen_bottom = int(290 * s)
+    screen_radius = int(45 * s)
     
-    # Screen background - dark with subtle gradient
-    for i in range(int(screen_top), int(screen_bottom)):
-        ratio = (i - screen_top) / (screen_bottom - screen_top)
-        gray = int(25 + ratio * 15)
-        draw.line([(screen_left, i), (screen_right, i)], fill=(gray, gray + 5, gray + 10, 255))
-    
+    # Screen with gradient (dark with slight blue tint)
     draw.rounded_rectangle(
         [screen_left, screen_top, screen_right, screen_bottom],
         radius=screen_radius,
-        outline=(60, 60, 70, 255),
-        width=int(2 * s)
+        fill=(30, 35, 50, 255)
     )
     
-    # === FRIENDLY EYES (simple, clean) ===
-    eye_y = int(screen_top + (screen_bottom - screen_top) * 0.35)
-    eye_spacing = int(50 * s)
-    eye_width = int(35 * s)
-    eye_height = int(20 * s)
+    # Screen inner gradient (subtle glossy effect)
+    for i in range(int(screen_top + 10*s), int(screen_bottom - 10*s)):
+        ratio = (i - screen_top) / (screen_bottom - screen_top)
+        # Keep it dark with subtle gradient
+        gray = int(30 + ratio * 15)
+        draw.line(
+            [screen_left + 10*s, i, screen_right - 10*s, i],
+            fill=(gray, gray + 3, gray + 8, 255)
+        )
     
-    # Left eye - simple curved line (happy closed eye)
-    left_eye_x = cx - eye_spacing
+    # Screen outline
+    draw.rounded_rectangle(
+        [screen_left, screen_top, screen_right, screen_bottom],
+        radius=screen_radius,
+        outline=(50, 55, 70, 255),
+        width=int(3 * s)
+    )
+    
+    # === HAPPY EYES (curved arcs) ===
+    eye_y = int(185 * s)
+    eye_spacing = int(65 * s)
+    eye_width = int(45 * s)
+    eye_height = int(25 * s)
+    line_width = int(6 * s)
+    
+    # Left eye - happy curved line
+    left_eye_cx = cx - eye_spacing
     draw.arc(
-        [left_eye_x - eye_width//2, eye_y - eye_height//2, 
-         left_eye_x + eye_width//2, eye_y + eye_height//2],
+        [left_eye_cx - eye_width//2, eye_y - eye_height//2,
+         left_eye_cx + eye_width//2, eye_y + eye_height//2],
         start=200, end=340,
         fill=(255, 255, 255, 255),
-        width=int(4 * s)
+        width=line_width
     )
     
     # Right eye
-    right_eye_x = cx + eye_spacing
+    right_eye_cx = cx + eye_spacing
     draw.arc(
-        [right_eye_x - eye_width//2, eye_y - eye_height//2, 
-         right_eye_x + eye_width//2, eye_y + eye_height//2],
+        [right_eye_cx - eye_width//2, eye_y - eye_height//2,
+         right_eye_cx + eye_width//2, eye_y + eye_height//2],
         start=200, end=340,
         fill=(255, 255, 255, 255),
-        width=int(4 * s)
+        width=line_width
     )
     
-    # === SMILE (friendly, clean arc) ===
-    smile_y = int(screen_top + (screen_bottom - screen_top) * 0.7)
-    smile_width = int(70 * s)
-    smile_height = int(35 * s)
+    # === SMILE (green curved line) ===
+    smile_y = int(245 * s)
+    smile_width = int(80 * s)
+    smile_height = int(40 * s)
     
     draw.arc(
         [cx - smile_width//2, smile_y - smile_height//2,
          cx + smile_width//2, smile_y + smile_height//2],
-        start=20, end=160,
-        fill=(120, 230, 150, 255),  # Fresh green smile
-        width=int(5 * s)
+        start=15, end=165,
+        fill=(160, 230, 180, 255),  # Soft green
+        width=int(6 * s)
     )
     
-    # === SPARKLE (one clean sparkle to show "clean") ===
-    sparkle_x = int(body_right - 30 * s)
-    sparkle_y = int(body_top + 30 * s)
-    sparkle_size = int(20 * s)
+    # === FRONT BUTTON/INDICATOR ===
+    button_y = int(340 * s)
+    button_radius = int(8 * s)
     
-    # Four-point star sparkle
-    # Vertical line
-    draw.line(
-        [sparkle_x, sparkle_y - sparkle_size, sparkle_x, sparkle_y + sparkle_size],
-        fill=(255, 255, 255, 255),
-        width=int(3 * s)
-    )
-    # Horizontal line
-    draw.line(
-        [sparkle_x - sparkle_size, sparkle_y, sparkle_x + sparkle_size, sparkle_y],
-        fill=(255, 255, 255, 255),
-        width=int(3 * s)
-    )
-    # Small diagonal lines
-    diag = int(sparkle_size * 0.5)
-    draw.line(
-        [sparkle_x - diag, sparkle_y - diag, sparkle_x + diag, sparkle_y + diag],
-        fill=(255, 255, 255, 200),
-        width=int(2 * s)
-    )
-    draw.line(
-        [sparkle_x + diag, sparkle_y - diag, sparkle_x - diag, sparkle_y + diag],
-        fill=(255, 255, 255, 200),
-        width=int(2 * s)
-    )
-    # Center glow
+    # Button shadow
     draw.ellipse(
-        [sparkle_x - 4*s, sparkle_y - 4*s, sparkle_x + 4*s, sparkle_y + 4*s],
-        fill=(255, 255, 255, 255)
+        [cx - button_radius - 2*s, button_y - button_radius + 2*s,
+         cx + button_radius + 2*s, button_y + button_radius + 4*s],
+        fill=(180, 185, 195, 255)
     )
-    
-    # === SMALL SECOND SPARKLE ===
-    sparkle2_x = int(body_left + 50 * s)
-    sparkle2_y = int(body_bottom - 20 * s)
-    sparkle2_size = int(12 * s)
-    
-    draw.line(
-        [sparkle2_x, sparkle2_y - sparkle2_size, sparkle2_x, sparkle2_y + sparkle2_size],
-        fill=(255, 255, 255, 230),
-        width=int(2 * s)
-    )
-    draw.line(
-        [sparkle2_x - sparkle2_size, sparkle2_y, sparkle2_x + sparkle2_size, sparkle2_y],
-        fill=(255, 255, 255, 230),
-        width=int(2 * s)
-    )
+    # Button
     draw.ellipse(
-        [sparkle2_x - 3*s, sparkle2_y - 3*s, sparkle2_x + 3*s, sparkle2_y + 3*s],
-        fill=(255, 255, 255, 255)
+        [cx - button_radius, button_y - button_radius,
+         cx + button_radius, button_y + button_radius],
+        fill=(140, 150, 170, 255)
+    )
+    # Button highlight
+    draw.ellipse(
+        [cx - button_radius//2, button_y - button_radius//2,
+         cx + button_radius//3, button_y + button_radius//3],
+        fill=(170, 180, 200, 200)
     )
     
-    # === APPLE-STYLE REFLECTION (subtle highlight on body) ===
+    # === TOP HIGHLIGHT (3D shine) ===
     highlight_y = body_top + int(15 * s)
-    for i in range(int(30 * s)):
-        alpha = int(60 * (1 - i / (30 * s)))
+    highlight_width = int(180 * s)
+    for i in range(int(25 * s)):
+        alpha = int(80 * (1 - i / (25 * s)))
         draw.line(
-            [body_left + corner_radius, highlight_y + i, 
-             body_right - corner_radius, highlight_y + i],
+            [cx - highlight_width//2 + i, highlight_y + i,
+             cx + highlight_width//2 - i, highlight_y + i],
             fill=(255, 255, 255, alpha)
         )
-    
-    # === BASE/STAND (simple, clean) ===
-    base_width = int(80 * s)
-    base_height = int(15 * s)
-    base_top = body_bottom + body_depth + int(5 * s)
-    
-    # Simple rounded base
-    draw.rounded_rectangle(
-        [cx - base_width//2, base_top, cx + base_width//2, base_top + base_height],
-        radius=int(5 * s),
-        fill=(180, 185, 190, 255)
-    )
-    # Base shadow
-    draw.rounded_rectangle(
-        [cx - base_width//2 + 5*s, base_top + base_height, 
-         cx + base_width//2 - 5*s, base_top + base_height + 5*s],
-        radius=int(3 * s),
-        fill=(100, 105, 110, 100)
-    )
     
     return img
 
@@ -228,11 +239,11 @@ def main():
     output_dir = "MacCoolClean/Assets.xcassets/AppIcon.appiconset"
     os.makedirs(output_dir, exist_ok=True)
     
-    print("✨ Generating clean MacCoolClean icons...")
+    print("🤖 Generating cute robot icons...")
     
     for size in sizes:
         print(f"  Creating {size}x{size}...")
-        icon = create_clean_mac_icon(size)
+        icon = create_robot_icon(size)
         
         if size <= 512:
             icon.save(f"{output_dir}/icon_{size}x{size}.png")
@@ -248,7 +259,6 @@ def main():
         elif size == 1024:
             icon.save(f"{output_dir}/icon_512x512@2x.png")
     
-    # Contents.json
     contents = '''{
   "images" : [
     { "filename" : "icon_16x16.png", "idiom" : "mac", "scale" : "1x", "size" : "16x16" },
@@ -268,9 +278,9 @@ def main():
     with open(f"{output_dir}/Contents.json", "w") as f:
         f.write(contents)
     
-    preview = create_clean_mac_icon(512)
+    preview = create_robot_icon(512)
     preview.save("icon_preview.png")
-    print("\n✅ Clean icons generated!")
+    print("\n✅ Cute robot icons generated!")
     print("📁 Preview: icon_preview.png")
 
 

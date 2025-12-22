@@ -13,7 +13,9 @@
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>$(PRODUCT_NAME)</string>
+    <string>MacCoolClean</string>
+    <key>CFBundleDisplayName</key>
+    <string>MacCoolClean</string>
     <key>CFBundlePackageType</key>
     <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
     <key>CFBundleShortVersionString</key>
@@ -27,7 +29,7 @@
     <key>LSUIElement</key>
     <false/>
     <key>NSHumanReadableCopyright</key>
-    <string>Copyright © 2024. All rights reserved.</string>
+    <string>Copyright © 2024 iDevelopment LLC. All rights reserved.</string>
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
     <key>NSSupportsAutomaticTermination</key>
@@ -37,22 +39,21 @@
     
     <!-- Privacy permissions -->
     <key>NSAppleEventsUsageDescription</key>
-    <string>MacClean needs to run scripts with administrator privileges to delete protected files.</string>
+    <string>MacCoolClean needs to run scripts with administrator privileges to delete protected files.</string>
     
     <key>NSDesktopFolderUsageDescription</key>
-    <string>MacClean needs access to scan files on your Desktop.</string>
+    <string>MacCoolClean needs access to scan files on your Desktop.</string>
     
     <key>NSDocumentsFolderUsageDescription</key>
-    <string>MacClean needs access to scan files in your Documents folder.</string>
+    <string>MacCoolClean needs access to scan files in your Documents folder.</string>
     
     <key>NSDownloadsFolderUsageDescription</key>
-    <string>MacClean needs access to scan files in your Downloads folder.</string>
+    <string>MacCoolClean needs access to scan files in your Downloads folder.</string>
     
     <key>NSRemovableVolumesUsageDescription</key>
-    <string>MacClean needs access to scan files on removable volumes.</string>
+    <string>MacCoolClean needs access to scan files on removable volumes.</string>
     
     <key>NSSystemAdministrationUsageDescription</key>
-    <string>MacClean needs administrator access to delete protected system files.</string>
+    <string>MacCoolClean needs administrator access to delete protected system files.</string>
 </dict>
 </plist>
-

@@ -11,7 +11,7 @@ class StoreManager: ObservableObject {
     static let shared = StoreManager()
     
     // Product ID for the one-time purchase
-    private let productID = "com.idevelopmentllc.MacClean.pro.lifetime"
+    private let productID = "com.idevelopmentllc.MacCoolClean.pro.lifetime"
     
     @Published var isPurchased = false
     @Published var remainingFreeScans: Int = 5

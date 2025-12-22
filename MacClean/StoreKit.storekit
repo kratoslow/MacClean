@@ -11,11 +11,11 @@
       "localizations" : [
         {
           "description" : "Unlock unlimited scans forever. One-time purchase.",
-          "displayName" : "MacClean Pro - Lifetime",
+          "displayName" : "MacCoolClean Pro - Lifetime",
           "locale" : "en_US"
         }
       ],
-      "productID" : "com.idevelopmentllc.MacClean.pro.lifetime",
+      "productID" : "com.idevelopmentllc.MacCoolClean.pro.lifetime",
       "referenceName" : "Pro Lifetime",
       "type" : "NonConsumable"
     }

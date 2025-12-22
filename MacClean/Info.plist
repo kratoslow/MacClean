@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>$(DEVELOPMENT_LANGUAGE)</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIconFile</key>
+    <string></string>
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>$(PRODUCT_NAME)</string>
+    <key>CFBundlePackageType</key>
+    <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.utilities</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+    <key>LSUIElement</key>
+    <false/>
+    <key>NSHumanReadableCopyright</key>
+    <string>Copyright © 2024. All rights reserved.</string>
+    <key>NSPrincipalClass</key>
+    <string>NSApplication</string>
+    <key>NSSupportsAutomaticTermination</key>
+    <true/>
+    <key>NSSupportsSuddenTermination</key>
+    <true/>
+    
+    <!-- Privacy permissions -->
+    <key>NSAppleEventsUsageDescription</key>
+    <string>MacClean needs to run scripts with administrator privileges to delete protected files.</string>
+    
+    <key>NSDesktopFolderUsageDescription</key>
+    <string>MacClean needs access to scan files on your Desktop.</string>
+    
+    <key>NSDocumentsFolderUsageDescription</key>
+    <string>MacClean needs access to scan files in your Documents folder.</string>
+    
+    <key>NSDownloadsFolderUsageDescription</key>
+    <string>MacClean needs access to scan files in your Downloads folder.</string>
+    
+    <key>NSRemovableVolumesUsageDescription</key>
+    <string>MacClean needs access to scan files on removable volumes.</string>
+    
+    <key>NSSystemAdministrationUsageDescription</key>
+    <string>MacClean needs administrator access to delete protected system files.</string>
+</dict>
+</plist>
+

@@ -43,6 +43,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         // App is sandboxed - folder access is granted per-folder via the Open Panel
         // No need to request Full Disk Access
+        
+        // Hidden debug shortcut: Control+Shift+R to reset free scans
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+            // Control + Shift + R
+            if event.modifierFlags.contains([.control, .shift]) && event.charactersIgnoringModifiers == "r" {
+                Task { @MainActor in
+                    StoreManager.shared.resetFreeScans()
+                }
+                return nil // Consume the event
+            }
+            return event
+        }
     }
     
     func applicationWillTerminate(_ notification: Notification) {

@@ -100,15 +100,6 @@ struct ContentView: View {
                 searchPath = firstFolder.path
             }
         }
-        // Debug shortcut: Control+R to reset free scans
-        .keyboardShortcut("r", modifiers: [.control])
-        .onKeyPress(.init("r"), phases: .down) { keyPress in
-            if keyPress.modifiers.contains(.control) {
-                storeManager.resetFreeScans()
-                return .handled
-            }
-            return .ignored
-        }
     }
     
     func drillIntoFolder(_ path: String) {
@@ -302,8 +293,8 @@ struct SidebarView: View {
         NSHomeDirectory().replacingOccurrences(of: "/Library/Containers/com.idevelopmentllc.MacCoolClean/Data", with: "")
     }
     
-    // Quick location suggestions
-    var suggestedLocations: [(name: String, path: String, icon: String)] {
+    // Predefined quick locations
+    var predefinedLocations: [(name: String, path: String, icon: String)] {
         [
             ("Home Folder", realHomeDir, "house.fill"),
             ("Downloads", "\(realHomeDir)/Downloads", "arrow.down.circle.fill"),
@@ -312,6 +303,23 @@ struct SidebarView: View {
             ("Applications", "/Applications", "app.fill"),
             ("Library Caches", "\(realHomeDir)/Library/Caches", "archivebox.fill"),
         ]
+    }
+    
+    // All locations including custom folders
+    var allLocations: [(name: String, path: String, icon: String)] {
+        var locations = predefinedLocations
+        let predefinedPaths = Set(predefinedLocations.map { $0.path })
+        
+        // Add custom folders that aren't in predefined list
+        for folder in bookmarkManager.accessibleFolders {
+            if !predefinedPaths.contains(folder.path) {
+                let icon = folder.path == "/" ? "internaldrive.fill" : "folder.fill"
+                let name = folder.path == "/" ? "Macintosh HD" : folder.lastPathComponent
+                locations.append((name: name, path: folder.path, icon: icon))
+            }
+        }
+        
+        return locations
     }
     
     
@@ -338,8 +346,8 @@ struct SidebarView: View {
                         .padding(.top, 16)
                         .padding(.bottom, 8)
                     
-                    // Quick locations
-                    ForEach(suggestedLocations, id: \.path) { location in
+                    // All locations (predefined + custom)
+                    ForEach(allLocations, id: \.path) { location in
                         SuggestedLocationButton(
                             name: location.name,
                             path: location.path,

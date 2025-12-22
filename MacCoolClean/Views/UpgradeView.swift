@@ -180,7 +180,7 @@ struct UpgradeView: View {
             .padding(.trailing, 12)
             .help("Close")
         }
-        .frame(width: 380, height: 540)
+        .frame(width: 400, height: 620)
         .alert("Purchase Error", isPresented: $showError) {
             Button("OK", role: .cancel) { }
         } message: {

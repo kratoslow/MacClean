@@ -1,6 +1,6 @@
 //
 //  MenuBarView.swift
-//  MacClean
+//  MacCoolClean
 //
 
 import SwiftUI
@@ -32,7 +32,7 @@ struct MenuBarView: View {
                         )
                     )
                 
-                Text("MacClean")
+                Text("MacCoolClean")
                     .font(.system(size: 14, weight: .bold, design: .rounded))
                 
                 Spacer()
@@ -149,14 +149,14 @@ struct MenuBarView: View {
                     loadStorageInfo()
                 }
                 
-                MenuBarButton(icon: "magnifyingglass", title: "Open MacClean") {
+                MenuBarButton(icon: "magnifyingglass", title: "Open MacCoolClean") {
                     openMainWindow()
                 }
                 
                 Divider()
                     .padding(.vertical, 4)
                 
-                MenuBarButton(icon: "xmark.circle", title: "Quit MacClean") {
+                MenuBarButton(icon: "xmark.circle", title: "Quit MacCoolClean") {
                     NSApplication.shared.terminate(nil)
                 }
             }
@@ -215,7 +215,7 @@ struct MenuBarView: View {
     }
     
     func openMainWindow() {
-        if let window = NSApplication.shared.windows.first(where: { $0.title.isEmpty || $0.title == "MacClean" }) {
+        if let window = NSApplication.shared.windows.first(where: { $0.title.isEmpty || $0.title == "MacCoolClean" }) {
             window.makeKeyAndOrderFront(nil)
             NSApplication.shared.activate(ignoringOtherApps: true)
         } else {

@@ -1,6 +1,6 @@
 //
 //  StoreManager.swift
-//  MacClean
+//  MacCoolClean
 //
 
 import Foundation

@@ -1,6 +1,6 @@
 //
 //  ScannedFile.swift
-//  MacClean
+//  MacCoolClean
 //
 
 import Foundation

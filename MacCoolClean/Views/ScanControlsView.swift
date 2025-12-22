@@ -1,6 +1,6 @@
 //
 //  ScanControlsView.swift
-//  MacClean
+//  MacCoolClean
 //
 
 import SwiftUI

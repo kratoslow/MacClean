@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  MacClean
+//  MacCoolClean
 //
 
 import SwiftUI
@@ -154,7 +154,7 @@ struct TitleBarView: View {
                         )
                     )
                 
-                Text("MacClean")
+                Text("MacCoolClean")
                     .font(.system(size: 18, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
             }
@@ -226,7 +226,7 @@ struct SidebarView: View {
             
             // Version info
             VStack(spacing: 4) {
-                Text("MacClean v1.0")
+                Text("MacCoolClean v1.0")
                     .font(.system(size: 11, weight: .medium))
                     .foregroundColor(.white.opacity(0.4))
                 Text("Made with ❤️ for Mac")

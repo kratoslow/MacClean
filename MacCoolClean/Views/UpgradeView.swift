@@ -1,6 +1,6 @@
 //
 //  UpgradeView.swift
-//  MacClean
+//  MacCoolClean
 //
 
 import SwiftUI

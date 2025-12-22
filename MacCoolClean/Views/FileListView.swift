@@ -1,6 +1,6 @@
 //
 //  FileListView.swift
-//  MacClean
+//  MacCoolClean
 //
 
 import SwiftUI

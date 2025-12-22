@@ -1,6 +1,6 @@
 //
 //  StorageOverviewCard.swift
-//  MacClean
+//  MacCoolClean
 //
 
 import SwiftUI

@@ -514,9 +514,13 @@ struct FileRowView: View {
                         
                         // Drill-down indicator for folders
                         if file.isDirectory && onDrillDown != nil {
-                            Image(systemName: "chevron.right.circle.fill")
-                                .font(.system(size: 12))
-                                .foregroundColor(Color(hex: "e94560").opacity(isHovering ? 1 : 0.6))
+                            HStack(spacing: 4) {
+                                Image(systemName: "arrow.right.circle.fill")
+                                    .font(.system(size: 12))
+                                Text("Double-click to open")
+                                    .font(.system(size: 10))
+                            }
+                            .foregroundColor(Color(hex: "e94560").opacity(isHovering ? 1 : 0.5))
                         }
                     }
                     
@@ -528,15 +532,22 @@ struct FileRowView: View {
                 }
             }
             .contentShape(Rectangle())
-            .onTapGesture(count: 2) {
-                // Double-click to drill down
-                if let drillDown = onDrillDown {
-                    drillDown()
-                }
-            }
-            .onTapGesture(count: 1) {
-                // Single click - handled by selection
-            }
+            .gesture(
+                TapGesture(count: 2)
+                    .onEnded {
+                        // Double-click to drill down into folder
+                        if let drillDown = onDrillDown {
+                            drillDown()
+                        }
+                    }
+            )
+            .simultaneousGesture(
+                TapGesture(count: 1)
+                    .onEnded {
+                        // Single click toggles selection
+                        onToggle()
+                    }
+            )
             
             Spacer()
             

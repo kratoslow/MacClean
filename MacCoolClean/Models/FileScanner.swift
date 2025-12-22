@@ -2,6 +2,8 @@
 //  FileScanner.swift
 //  MacCoolClean
 //
+//  Sandbox-compatible file scanner for Mac App Store distribution
+//
 
 import Foundation
 import Combine
@@ -78,31 +80,17 @@ class FileScanner: ObservableObject {
     func deleteFile(_ file: ScannedFile) {
         let fileManager = FileManager.default
         
-        // Try normal deletion first
         do {
-            try fileManager.removeItem(atPath: file.path)
+            // In sandbox mode, we can only delete files the user has granted access to
+            try fileManager.trashItem(at: URL(fileURLWithPath: file.path), resultingItemURL: nil)
             scannedFiles.removeAll { $0.id == file.id }
         } catch {
-            // If normal deletion fails, try with admin privileges
-            deleteWithAdminPrivileges(file)
-        }
-    }
-    
-    private func deleteWithAdminPrivileges(_ file: ScannedFile) {
-        let escapedPath = file.path.replacingOccurrences(of: "'", with: "'\\''")
-        
-        let script = """
-        do shell script "rm -rf '\(escapedPath)'" with administrator privileges
-        """
-        
-        var error: NSDictionary?
-        if let appleScript = NSAppleScript(source: script) {
-            appleScript.executeAndReturnError(&error)
-            
-            if error == nil {
+            // Try direct removal if trash fails
+            do {
+                try fileManager.removeItem(atPath: file.path)
                 scannedFiles.removeAll { $0.id == file.id }
-            } else {
-                lastError = "Could not delete \(file.name)"
+            } catch {
+                lastError = "Could not delete \(file.name): \(error.localizedDescription)"
             }
         }
     }
@@ -131,18 +119,9 @@ actor BackgroundScanner {
         let fileManager = FileManager.default
         let rootURL = URL(fileURLWithPath: path)
         
-        // Check if we need admin access for this path
-        let needsAdmin = !fileManager.isReadableFile(atPath: path)
-        
-        if needsAdmin {
-            await scanWithAdminPrivileges(
-                path: path,
-                minSize: minSize,
-                shouldStop: shouldStop,
-                onFileFound: onFileFound,
-                onComplete: onComplete,
-                onError: onError
-            )
+        // Check if we can read this path
+        guard fileManager.isReadableFile(atPath: path) else {
+            await onError("Cannot access \(path). Please grant folder access first.")
             return
         }
         
@@ -159,7 +138,7 @@ actor BackgroundScanner {
             ],
             options: [.skipsHiddenFiles],
             errorHandler: { url, error in
-                // Skip directories we can't access
+                // Skip directories we can't access (expected in sandbox)
                 return true
             }
         ) else {
@@ -264,71 +243,5 @@ actor BackgroundScanner {
         }
         
         return totalSize
-    }
-    
-    private func scanWithAdminPrivileges(
-        path: String,
-        minSize: Int64,
-        shouldStop: @escaping () -> Bool,
-        onFileFound: @escaping (ScannedFile) async -> Void,
-        onComplete: @escaping () async -> Void,
-        onError: @escaping (String) async -> Void
-    ) async {
-        let script = """
-        do shell script "find '\(path)' -type f -size +\(minSize / 1024)k 2>/dev/null | head -1000" with administrator privileges
-        """
-        
-        // Run AppleScript on main thread as required
-        let result: (output: String?, error: String?) = await MainActor.run {
-            var error: NSDictionary?
-            if let appleScript = NSAppleScript(source: script) {
-                let result = appleScript.executeAndReturnError(&error)
-                if let error = error {
-                    return (nil, error["NSAppleScriptErrorMessage"] as? String ?? "Admin access denied")
-                }
-                return (result.stringValue, nil)
-            }
-            return (nil, "Could not create AppleScript")
-        }
-        
-        if let errorMsg = result.error {
-            await onError(errorMsg)
-            return
-        }
-        
-        if let output = result.output {
-            let paths = output.components(separatedBy: "\n").filter { !$0.isEmpty }
-            
-            for filePath in paths {
-                if shouldStop() {
-                    break
-                }
-                
-                let url = URL(fileURLWithPath: filePath)
-                
-                do {
-                    let attributes = try FileManager.default.attributesOfItem(atPath: filePath)
-                    let size = attributes[.size] as? Int64 ?? 0
-                    let modDate = attributes[.modificationDate] as? Date
-                    let creationDate = attributes[.creationDate] as? Date
-                    
-                    if size >= minSize {
-                        let file = ScannedFile(
-                            url: url,
-                            size: size,
-                            isDirectory: false,
-                            modifiedDate: modDate,
-                            createdDate: creationDate
-                        )
-                        
-                        await onFileFound(file)
-                    }
-                } catch {
-                    continue
-                }
-            }
-        }
-        
-        await onComplete()
     }
 }

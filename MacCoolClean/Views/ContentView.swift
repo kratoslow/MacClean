@@ -8,10 +8,12 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var storeManager: StoreManager
     @EnvironmentObject var fileScanner: FileScanner
+    @EnvironmentObject var bookmarkManager: BookmarkManager
     @State private var selectedFiles: Set<ScannedFile.ID> = []
     @State private var showingDeleteConfirmation = false
     @State private var showingUpgradeSheet = false
-    @State private var searchPath = "/"
+    // Use real home directory (not sandbox container)
+    @State private var searchPath = NSHomeDirectory().replacingOccurrences(of: "/Library/Containers/com.idevelopmentllc.MacCoolClean/Data", with: "")
     @State private var minSizeGB: Double = 0.1
     @State private var isHovering = false
     
@@ -36,8 +38,13 @@ struct ContentView: View {
                 // Main content
                 HStack(spacing: 0) {
                     // Sidebar
-                    SidebarView(searchPath: $searchPath, onNavigate: navigateToPath)
-                        .frame(width: 260)
+                    SidebarView(
+                        searchPath: $searchPath,
+                        minSizeGB: $minSizeGB,
+                        onNavigate: navigateToPath,
+                        showingUpgradeSheet: $showingUpgradeSheet
+                    )
+                    .frame(width: 260)
                     
                     // Divider
                     Rectangle()
@@ -58,14 +65,19 @@ struct ContentView: View {
                         )
                         .padding(.horizontal)
                         
-                        // File list
-                        FileListView(
-                            selectedFiles: $selectedFiles,
-                            showingDeleteConfirmation: $showingDeleteConfirmation,
-                            currentPath: $searchPath,
-                            onDrillDown: drillIntoFolder
-                        )
-                        .padding()
+                        // Show onboarding if no folders accessible
+                        if bookmarkManager.accessibleFolders.isEmpty && fileScanner.scannedFiles.isEmpty && !fileScanner.isScanning {
+                            OnboardingView(searchPath: $searchPath)
+                        } else {
+                            // File list
+                            FileListView(
+                                selectedFiles: $selectedFiles,
+                                showingDeleteConfirmation: $showingDeleteConfirmation,
+                                currentPath: $searchPath,
+                                onDrillDown: drillIntoFolder
+                            )
+                            .padding()
+                        }
                     }
                 }
             }
@@ -80,7 +92,22 @@ struct ContentView: View {
                 deleteSelectedFiles()
             }
         } message: {
-            Text("This action cannot be undone. \(selectedFiles.count) file(s) will be permanently deleted.")
+            Text("This action cannot be undone. \(selectedFiles.count) file(s) will be moved to Trash.")
+        }
+        .onAppear {
+            // Set initial path if we have accessible folders
+            if let firstFolder = bookmarkManager.accessibleFolders.first {
+                searchPath = firstFolder.path
+            }
+        }
+        // Debug shortcut: Control+R to reset free scans
+        .keyboardShortcut("r", modifiers: [.control])
+        .onKeyPress(.init("r"), phases: .down) { keyPress in
+            if keyPress.modifiers.contains(.control) {
+                storeManager.resetFreeScans()
+                return .handled
+            }
+            return .ignored
         }
     }
     
@@ -101,21 +128,9 @@ struct ContentView: View {
         selectedFiles.removeAll()
         searchPath = path
         
-        // Start a fresh scan when clicking sidebar items
-        let minBytes = Int64(minSizeGB * 1024 * 1024 * 1024)
-        
-        // Check if user has scans remaining or is pro
-        if !storeManager.isPurchased && storeManager.remainingFreeScans <= 0 {
-            showingUpgradeSheet = true
-            return
-        }
-        
-        // Use a scan if not pro
-        if !storeManager.isPurchased {
-            storeManager.useFreeScan()
-        }
-        
-        fileScanner.startScanning(path: path, minSize: minBytes)
+        // Sidebar navigation just sets the path - does NOT consume free scans
+        // User needs to click "Scan for Large Files" button to start a scan
+        // This is better UX - browsing the sidebar shouldn't use up free scans
     }
     
     func deleteSelectedFiles() {
@@ -128,6 +143,104 @@ struct ContentView: View {
         selectedFiles.removeAll()
     }
 }
+
+// MARK: - Onboarding View
+
+struct OnboardingView: View {
+    @EnvironmentObject var bookmarkManager: BookmarkManager
+    @Binding var searchPath: String
+    
+    var body: some View {
+        VStack(spacing: 24) {
+            Spacer()
+            
+            // Icon
+            ZStack {
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [Color(hex: "e94560").opacity(0.2), Color(hex: "e94560").opacity(0.1)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 100, height: 100)
+                
+                Image(systemName: "folder.badge.plus")
+                    .font(.system(size: 40))
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [Color(hex: "e94560"), Color(hex: "ff6b6b")],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+            }
+            
+            VStack(spacing: 12) {
+                Text("Grant Folder Access")
+                    .font(.system(size: 24, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                
+                Text("MacCoolClean needs your permission to scan folders.\nSelect a folder to get started.")
+                    .font(.system(size: 14))
+                    .foregroundColor(.white.opacity(0.6))
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(4)
+            }
+            
+            // Grant access button
+            Button(action: grantAccess) {
+                HStack(spacing: 10) {
+                    Image(systemName: "folder.badge.plus")
+                    Text("Choose Folder to Scan")
+                }
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundColor(.white)
+                .padding(.horizontal, 28)
+                .padding(.vertical, 14)
+                .background(
+                    LinearGradient(
+                        colors: [Color(hex: "e94560"), Color(hex: "c62a47")],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .shadow(color: Color(hex: "e94560").opacity(0.4), radius: 8, y: 4)
+            }
+            .buttonStyle(.plain)
+            
+            // Info text
+            VStack(spacing: 8) {
+                HStack(spacing: 6) {
+                    Image(systemName: "lock.shield")
+                        .font(.system(size: 12))
+                    Text("Your privacy is protected")
+                        .font(.system(size: 12, weight: .medium))
+                }
+                .foregroundColor(.white.opacity(0.5))
+                
+                Text("Files are only scanned locally on your Mac.\nNothing is uploaded to any server.")
+                    .font(.system(size: 11))
+                    .foregroundColor(.white.opacity(0.4))
+                    .multilineTextAlignment(.center)
+            }
+            .padding(.top, 8)
+            
+            Spacer()
+        }
+        .padding(40)
+    }
+    
+    func grantAccess() {
+        if let url = bookmarkManager.requestFolderAccess(message: "Select a folder to scan for large files") {
+            searchPath = url.path
+        }
+    }
+}
+
+// MARK: - Title Bar
 
 struct TitleBarView: View {
     var body: some View {
@@ -174,19 +287,33 @@ struct TitleBarView: View {
     }
 }
 
+// MARK: - Sidebar
+
 struct SidebarView: View {
     @Binding var searchPath: String
+    @Binding var minSizeGB: Double
     let onNavigate: (String) -> Void
+    @Binding var showingUpgradeSheet: Bool
     @EnvironmentObject var storeManager: StoreManager
+    @EnvironmentObject var bookmarkManager: BookmarkManager
     
-    let quickPaths: [(name: String, path: String, icon: String)] = [
-        ("Entire System", "/", "internaldrive.fill"),
-        ("Home Folder", FileManager.default.homeDirectoryForCurrentUser.path, "house.fill"),
-        ("Downloads", FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Downloads").path, "arrow.down.circle.fill"),
-        ("Documents", FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Documents").path, "doc.fill"),
-        ("Applications", "/Applications", "app.fill"),
-        ("Library Caches", FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Caches").path, "archivebox.fill"),
-    ]
+    // Real home directory (not sandbox container)
+    private var realHomeDir: String {
+        NSHomeDirectory().replacingOccurrences(of: "/Library/Containers/com.idevelopmentllc.MacCoolClean/Data", with: "")
+    }
+    
+    // Quick location suggestions
+    var suggestedLocations: [(name: String, path: String, icon: String)] {
+        [
+            ("Home Folder", realHomeDir, "house.fill"),
+            ("Downloads", "\(realHomeDir)/Downloads", "arrow.down.circle.fill"),
+            ("Documents", "\(realHomeDir)/Documents", "doc.fill"),
+            ("Desktop", "\(realHomeDir)/Desktop", "menubar.dock.rectangle"),
+            ("Applications", "/Applications", "app.fill"),
+            ("Library Caches", "\(realHomeDir)/Library/Caches", "archivebox.fill"),
+        ]
+    }
+    
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -202,23 +329,47 @@ struct SidebarView: View {
             Divider()
                 .background(Color.white.opacity(0.1))
             
-            // Quick locations
-            VStack(alignment: .leading, spacing: 4) {
-                Text("QUICK LOCATIONS")
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundColor(.white.opacity(0.5))
-                    .padding(.horizontal, 16)
-                    .padding(.top, 16)
-                    .padding(.bottom, 8)
-                
-                ForEach(quickPaths, id: \.path) { item in
-                    SidebarButton(
-                        icon: item.icon,
-                        title: item.name,
-                        isSelected: searchPath == item.path || searchPath.hasPrefix(item.path + "/")
-                    ) {
-                        onNavigate(item.path)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("QUICK LOCATIONS")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundColor(.white.opacity(0.5))
+                        .padding(.horizontal, 16)
+                        .padding(.top, 16)
+                        .padding(.bottom, 8)
+                    
+                    // Quick locations
+                    ForEach(suggestedLocations, id: \.path) { location in
+                        SuggestedLocationButton(
+                            name: location.name,
+                            path: location.path,
+                            icon: location.icon,
+                            isAccessible: bookmarkManager.hasAccess(to: location.path),
+                            isSelected: searchPath == location.path,
+                            onSelect: { selectLocation(location.path) }
+                        )
                     }
+                    
+                    // Add custom folder button
+                    Button(action: addFolder) {
+                        HStack(spacing: 12) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 14))
+                                .foregroundColor(Color(hex: "e94560"))
+                                .frame(width: 20)
+                            
+                            Text("Add Custom Folder...")
+                                .font(.system(size: 13))
+                                .foregroundColor(.white.opacity(0.7))
+                            
+                            Spacer()
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 10)
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.top, 8)
                 }
             }
             
@@ -238,32 +389,67 @@ struct SidebarView: View {
         }
         .background(Color.black.opacity(0.2))
     }
+    
+    func selectLocation(_ path: String) {
+        // Check if we have access, if not request it
+        if bookmarkManager.hasAccess(to: path) {
+            // Just navigate - don't start scan (user clicks Scan button for that)
+            onNavigate(path)
+        } else {
+            // Request access to this specific folder
+            if let url = bookmarkManager.requestFolderAccess(message: "Grant access to scan \(URL(fileURLWithPath: path).lastPathComponent)") {
+                searchPath = url.path
+            }
+        }
+    }
+    
+    func addFolder() {
+        if let url = bookmarkManager.requestFolderAccess(message: "Select a folder to add for scanning") {
+            searchPath = url.path
+        }
+    }
 }
 
-struct SidebarButton: View {
+// MARK: - Suggested Location Button
+
+struct SuggestedLocationButton: View {
+    let name: String
+    let path: String
     let icon: String
-    let title: String
+    let isAccessible: Bool
     let isSelected: Bool
-    let action: () -> Void
+    let onSelect: () -> Void
     
     @State private var isHovering = false
     
     var body: some View {
-        Button(action: action) {
+        Button(action: onSelect) {
             HStack(spacing: 12) {
                 Image(systemName: icon)
                     .font(.system(size: 14))
                     .foregroundColor(isSelected ? Color(hex: "e94560") : .white.opacity(0.7))
                     .frame(width: 20)
                 
-                Text(title)
+                Text(name)
                     .font(.system(size: 13, weight: isSelected ? .semibold : .regular))
                     .foregroundColor(isSelected ? .white : .white.opacity(0.8))
                 
                 Spacer()
+                
+                // Access indicator
+                if isAccessible {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 12))
+                        .foregroundColor(Color(hex: "28c840"))
+                } else {
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 10))
+                        .foregroundColor(.white.opacity(0.4))
+                }
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 10)
+            .contentShape(Rectangle()) // Makes entire row clickable
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .fill(isSelected ? Color(hex: "e94560").opacity(0.2) : (isHovering ? Color.white.opacity(0.05) : Color.clear))
@@ -408,4 +594,5 @@ extension Color {
     ContentView()
         .environmentObject(StoreManager.shared)
         .environmentObject(FileScanner.shared)
+        .environmentObject(BookmarkManager.shared)
 }

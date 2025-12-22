@@ -264,5 +264,6 @@ struct MenuBarButton: View {
     MenuBarView()
         .environmentObject(StoreManager.shared)
         .environmentObject(FileScanner.shared)
+        .environmentObject(BookmarkManager.shared)
 }
 

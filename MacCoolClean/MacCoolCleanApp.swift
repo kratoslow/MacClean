@@ -13,21 +13,25 @@ struct MacCoolCleanApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var storeManager = StoreManager.shared
     @StateObject private var fileScanner = FileScanner.shared
+    @StateObject private var bookmarkManager = BookmarkManager.shared
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(storeManager)
                 .environmentObject(fileScanner)
-                .frame(minWidth: 900, minHeight: 600)
+                .environmentObject(bookmarkManager)
+                .frame(minWidth: 1000, minHeight: 700)
+                .frame(idealWidth: 1200, idealHeight: 800)
         }
         .windowStyle(.hiddenTitleBar)
-        .windowResizability(.contentSize)
+        .defaultSize(width: 1200, height: 800)
         
         MenuBarExtra {
             MenuBarView()
                 .environmentObject(storeManager)
                 .environmentObject(fileScanner)
+                .environmentObject(bookmarkManager)
         } label: {
             MenuBarIcon()
         }
@@ -37,35 +41,14 @@ struct MacCoolCleanApp: App {
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Request full disk access notification
-        checkFullDiskAccess()
+        // App is sandboxed - folder access is granted per-folder via the Open Panel
+        // No need to request Full Disk Access
     }
     
-    func checkFullDiskAccess() {
-        let testPath = "/Users"
-        let fileManager = FileManager.default
-        
-        do {
-            _ = try fileManager.contentsOfDirectory(atPath: testPath)
-        } catch {
-            DispatchQueue.main.async {
-                self.showFullDiskAccessAlert()
-            }
-        }
-    }
-    
-    func showFullDiskAccessAlert() {
-        let alert = NSAlert()
-        alert.messageText = "Full Disk Access Required"
-        alert.informativeText = "MacCoolClean needs Full Disk Access to scan all files on your Mac. Please enable it in System Settings > Privacy & Security > Full Disk Access."
-        alert.alertStyle = .warning
-        alert.addButton(withTitle: "Open Settings")
-        alert.addButton(withTitle: "Later")
-        
-        if alert.runModal() == .alertFirstButtonReturn {
-            if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles") {
-                NSWorkspace.shared.open(url)
-            }
+    func applicationWillTerminate(_ notification: Notification) {
+        // Clean up security-scoped resource access
+        Task { @MainActor in
+            BookmarkManager.shared.stopAccessingAll()
         }
     }
 }

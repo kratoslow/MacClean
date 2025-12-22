@@ -8,18 +8,20 @@ import SwiftUI
 struct ScanControlsView: View {
     @EnvironmentObject var fileScanner: FileScanner
     @EnvironmentObject var storeManager: StoreManager
+    @EnvironmentObject var bookmarkManager: BookmarkManager
     @Binding var searchPath: String
     @Binding var minSizeGB: Double
     @Binding var showingUpgradeSheet: Bool
     
     @State private var isHovering = false
+    @State private var showingAccessAlert = false
     
     var body: some View {
         HStack(spacing: 16) {
-            // Path display
+            // Path display with access indicator
             HStack(spacing: 8) {
-                Image(systemName: "folder.fill")
-                    .foregroundColor(Color(hex: "e94560"))
+                Image(systemName: bookmarkManager.hasAccess(to: searchPath) ? "folder.fill" : "folder.badge.questionmark")
+                    .foregroundColor(bookmarkManager.hasAccess(to: searchPath) ? Color(hex: "e94560") : Color(hex: "febc2e"))
                 
                 Text(searchPath)
                     .font(.system(size: 13, design: .monospaced))
@@ -35,7 +37,7 @@ struct ScanControlsView: View {
                         .foregroundColor(.white.opacity(0.7))
                 }
                 .buttonStyle(.plain)
-                .help("Choose folder")
+                .help("Choose folder to scan")
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 10)
@@ -44,7 +46,7 @@ struct ScanControlsView: View {
                     .fill(Color.black.opacity(0.3))
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                            .stroke(bookmarkManager.hasAccess(to: searchPath) ? Color.white.opacity(0.1) : Color(hex: "febc2e").opacity(0.5), lineWidth: 1)
                     )
             )
             .frame(maxWidth: 300)
@@ -129,6 +131,14 @@ struct ScanControlsView: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color.white.opacity(0.03))
         )
+        .alert("Folder Access Required", isPresented: $showingAccessAlert) {
+            Button("Select Folder") {
+                selectFolder()
+            }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("To scan this folder, you need to grant access first. Click 'Select Folder' to choose a folder to scan.")
+        }
     }
     
     func formatSize(_ gb: Double) -> String {
@@ -140,18 +150,18 @@ struct ScanControlsView: View {
     }
     
     func selectFolder() {
-        let panel = NSOpenPanel()
-        panel.canChooseFiles = false
-        panel.canChooseDirectories = true
-        panel.allowsMultipleSelection = false
-        panel.message = "Select a folder to scan for large files"
-        
-        if panel.runModal() == .OK, let url = panel.url {
+        if let url = bookmarkManager.requestFolderAccess(message: "Select a folder to scan for large files") {
             searchPath = url.path
         }
     }
     
     func startScan() {
+        // Check if we have access to this path
+        if !bookmarkManager.hasAccess(to: searchPath) {
+            showingAccessAlert = true
+            return
+        }
+        
         // Check if user has scans remaining or is pro
         if !storeManager.isPurchased && storeManager.remainingFreeScans <= 0 {
             showingUpgradeSheet = true
@@ -177,6 +187,7 @@ struct ScanControlsView: View {
     )
     .environmentObject(FileScanner.shared)
     .environmentObject(StoreManager.shared)
+    .environmentObject(BookmarkManager.shared)
     .padding()
     .background(Color(hex: "1a1a2e"))
 }

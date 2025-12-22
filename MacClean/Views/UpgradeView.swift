@@ -15,7 +15,7 @@ struct UpgradeView: View {
     @State private var errorMessage = ""
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .topTrailing) {
             // Background
             LinearGradient(
                 colors: [
@@ -28,156 +28,159 @@ struct UpgradeView: View {
             )
             .ignoresSafeArea()
             
-            VStack(spacing: 0) {
-                // Close button - fixed at top
-                HStack {
+            // Main content
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 20) {
+                    // Spacer for close button area
                     Spacer()
-                    Button(action: { dismiss() }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.system(size: 24))
-                            .foregroundColor(.white.opacity(0.6))
-                    }
-                    .buttonStyle(.plain)
-                    .help("Close")
-                }
-                .padding(.horizontal, 16)
-                .padding(.top, 16)
-                .padding(.bottom, 8)
-                
-                // Scrollable content
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 24) {
-                        // Crown icon
-                        ZStack {
-                            Circle()
-                                .fill(
-                                    RadialGradient(
-                                        colors: [Color(hex: "ffd700").opacity(0.3), Color.clear],
-                                        center: .center,
-                                        startRadius: 30,
-                                        endRadius: 80
-                                    )
+                        .frame(height: 20)
+                    
+                    // Crown icon
+                    ZStack {
+                        Circle()
+                            .fill(
+                                RadialGradient(
+                                    colors: [Color(hex: "ffd700").opacity(0.3), Color.clear],
+                                    center: .center,
+                                    startRadius: 30,
+                                    endRadius: 80
                                 )
-                                .frame(width: 160, height: 160)
-                            
-                            Image(systemName: "crown.fill")
-                                .font(.system(size: 56))
-                                .foregroundStyle(
-                                    LinearGradient(
-                                        colors: [Color(hex: "ffd700"), Color(hex: "ff8c00")],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
-                                .shadow(color: Color(hex: "ffd700").opacity(0.5), radius: 16)
-                        }
+                            )
+                            .frame(width: 140, height: 140)
                         
-                        // Title
-                        VStack(spacing: 8) {
-                            Text("Upgrade to Pro")
-                                .font(.system(size: 28, weight: .bold, design: .rounded))
-                                .foregroundColor(.white)
-                            
-                            Text("Unlock unlimited scans forever")
-                                .font(.system(size: 15))
-                                .foregroundColor(.white.opacity(0.7))
-                        }
-                        
-                        // Features
-                        VStack(alignment: .leading, spacing: 14) {
-                            FeatureRow(icon: "infinity", text: "Unlimited file scans")
-                            FeatureRow(icon: "bolt.fill", text: "Priority scanning speed")
-                            FeatureRow(icon: "heart.fill", text: "Support indie development")
-                            FeatureRow(icon: "arrow.up.circle.fill", text: "Free updates forever")
-                        }
-                        .padding(.vertical, 20)
-                        .padding(.horizontal, 28)
-                        .background(
-                            RoundedRectangle(cornerRadius: 14)
-                                .fill(Color.white.opacity(0.05))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 14)
-                                        .stroke(Color.white.opacity(0.1), lineWidth: 1)
-                                )
-                        )
-                        
-                        // Price
-                        VStack(spacing: 4) {
-                            HStack(alignment: .firstTextBaseline, spacing: 2) {
-                                Text("$")
-                                    .font(.system(size: 20, weight: .bold))
-                                    .foregroundColor(.white.opacity(0.7))
-                                Text("0.99")
-                                    .font(.system(size: 42, weight: .bold, design: .rounded))
-                                    .foregroundColor(.white)
-                            }
-                            
-                            Text("One-time purchase • No subscription")
-                                .font(.system(size: 12))
-                                .foregroundColor(.white.opacity(0.5))
-                        }
-                        
-                        // Purchase button
-                        Button(action: purchase) {
-                            HStack(spacing: 10) {
-                                if isPurchasing {
-                                    ProgressView()
-                                        .scaleEffect(0.8)
-                                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                                }
-                                Text(isPurchasing ? "Processing..." : "Unlock Pro Now")
-                                    .font(.system(size: 17, weight: .bold))
-                            }
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 16)
-                            .background(
+                        Image(systemName: "crown.fill")
+                            .font(.system(size: 52))
+                            .foregroundStyle(
                                 LinearGradient(
                                     colors: [Color(hex: "ffd700"), Color(hex: "ff8c00")],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 )
                             )
-                            .clipShape(RoundedRectangle(cornerRadius: 14))
-                            .shadow(color: Color(hex: "ffd700").opacity(0.4), radius: 10, y: 4)
-                        }
-                        .buttonStyle(.plain)
-                        .disabled(isPurchasing)
-                        .padding(.horizontal, 24)
+                            .shadow(color: Color(hex: "ffd700").opacity(0.5), radius: 16)
+                    }
+                    
+                    // Title
+                    VStack(spacing: 6) {
+                        Text("Upgrade to Pro")
+                            .font(.system(size: 26, weight: .bold, design: .rounded))
+                            .foregroundColor(.white)
                         
-                        // Restore purchases
-                        Button(action: restore) {
-                            Text("Restore Previous Purchase")
-                                .font(.system(size: 13))
-                                .foregroundColor(.white.opacity(0.6))
-                                .underline()
+                        Text("Unlock unlimited scans forever")
+                            .font(.system(size: 14))
+                            .foregroundColor(.white.opacity(0.7))
+                    }
+                    
+                    // Features
+                    VStack(alignment: .leading, spacing: 12) {
+                        FeatureRow(icon: "infinity", text: "Unlimited file scans")
+                        FeatureRow(icon: "bolt.fill", text: "Priority scanning speed")
+                        FeatureRow(icon: "heart.fill", text: "Support indie development")
+                        FeatureRow(icon: "arrow.up.circle.fill", text: "Free updates forever")
+                    }
+                    .padding(.vertical, 18)
+                    .padding(.horizontal, 24)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.white.opacity(0.05))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                            )
+                    )
+                    
+                    // Price
+                    VStack(spacing: 2) {
+                        HStack(alignment: .firstTextBaseline, spacing: 2) {
+                            Text("$")
+                                .font(.system(size: 18, weight: .bold))
+                                .foregroundColor(.white.opacity(0.7))
+                            Text("0.99")
+                                .font(.system(size: 38, weight: .bold, design: .rounded))
+                                .foregroundColor(.white)
                         }
-                        .buttonStyle(.plain)
                         
-                        // Free scans remaining
+                        Text("One-time purchase • No subscription")
+                            .font(.system(size: 11))
+                            .foregroundColor(.white.opacity(0.5))
+                    }
+                    
+                    // Purchase button
+                    Button(action: purchase) {
+                        HStack(spacing: 10) {
+                            if isPurchasing {
+                                ProgressView()
+                                    .scaleEffect(0.8)
+                                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            }
+                            Text(isPurchasing ? "Processing..." : "Unlock Pro Now")
+                                .font(.system(size: 16, weight: .bold))
+                        }
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .background(
+                            LinearGradient(
+                                colors: [Color(hex: "ffd700"), Color(hex: "ff8c00")],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .shadow(color: Color(hex: "ffd700").opacity(0.4), radius: 8, y: 4)
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(isPurchasing)
+                    .padding(.horizontal, 16)
+                    
+                    // Restore purchases
+                    Button(action: restore) {
+                        Text("Restore Previous Purchase")
+                            .font(.system(size: 12))
+                            .foregroundColor(.white.opacity(0.6))
+                            .underline()
+                    }
+                    .buttonStyle(.plain)
+                    
+                    // Free scans remaining & skip option
+                    VStack(spacing: 8) {
                         if storeManager.remainingFreeScans > 0 {
                             Text("You have \(storeManager.remainingFreeScans) free scan\(storeManager.remainingFreeScans == 1 ? "" : "s") remaining")
                                 .font(.system(size: 11))
                                 .foregroundColor(.white.opacity(0.4))
                         }
                         
-                        // Skip for now
-                        if storeManager.remainingFreeScans > 0 {
-                            Button(action: { dismiss() }) {
-                                Text("Continue with Free Trial")
-                                    .font(.system(size: 13, weight: .medium))
-                                    .foregroundColor(Color(hex: "e94560"))
-                            }
-                            .buttonStyle(.plain)
-                            .padding(.top, 4)
+                        Button(action: { dismiss() }) {
+                            Text("Maybe Later")
+                                .font(.system(size: 13, weight: .medium))
+                                .foregroundColor(Color(hex: "e94560"))
                         }
+                        .buttonStyle(.plain)
                     }
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 24)
+                    .padding(.top, 4)
+                    .padding(.bottom, 16)
+                }
+                .padding(.horizontal, 24)
+            }
+            
+            // Close button - ALWAYS visible, fixed position
+            Button(action: { dismiss() }) {
+                ZStack {
+                    Circle()
+                        .fill(Color.black.opacity(0.4))
+                        .frame(width: 32, height: 32)
+                    
+                    Image(systemName: "xmark")
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(.white)
                 }
             }
+            .buttonStyle(.plain)
+            .padding(.top, 12)
+            .padding(.trailing, 12)
+            .help("Close")
         }
-        .frame(width: 420, height: 580)
+        .frame(width: 380, height: 540)
         .alert("Purchase Error", isPresented: $showError) {
             Button("OK", role: .cancel) { }
         } message: {
@@ -233,14 +236,14 @@ struct FeatureRow: View {
     let text: String
     
     var body: some View {
-        HStack(spacing: 14) {
+        HStack(spacing: 12) {
             Image(systemName: icon)
-                .font(.system(size: 15))
+                .font(.system(size: 14))
                 .foregroundColor(Color(hex: "ffd700"))
-                .frame(width: 22)
+                .frame(width: 20)
             
             Text(text)
-                .font(.system(size: 14))
+                .font(.system(size: 13))
                 .foregroundColor(.white)
         }
     }

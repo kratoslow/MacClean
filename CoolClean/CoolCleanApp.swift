@@ -61,9 +61,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return event
         }
         
-        // Capture the main window reference
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        // Ensure app is a regular foreground app
+        NSApp.setActivationPolicy(.regular)
+        
+        // Activate immediately
+        NSApplication.shared.activate(ignoringOtherApps: true)
+        
+        // Capture the main window reference and bring app to foreground after window is ready
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.mainWindow = NSApplication.shared.windows.first(where: { $0.level == .normal })
+            
+            // Activate again and bring window to front
+            NSApplication.shared.activate(ignoringOtherApps: true)
+            if let window = self.mainWindow {
+                window.makeKeyAndOrderFront(nil)
+                window.orderFrontRegardless()
+            }
         }
     }
     

@@ -21,6 +21,8 @@
 		012 /* StoreKit.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 201 /* StoreKit.storekit */; };
 		013 /* SystemFolderInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110 /* SystemFolderInfo.swift */; };
 		014 /* BookmarkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111 /* BookmarkManager.swift */; };
+		015 /* DuplicateGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112 /* DuplicateGroup.swift */; };
+		016 /* DuplicatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113 /* DuplicatesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		109 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		110 /* SystemFolderInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemFolderInfo.swift; sourceTree = "<group>"; };
 		111 /* BookmarkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkManager.swift; sourceTree = "<group>"; };
+		112 /* DuplicateGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicateGroup.swift; sourceTree = "<group>"; };
+		113 /* DuplicatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatesView.swift; sourceTree = "<group>"; };
 		200 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		201 /* StoreKit.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreKit.storekit; sourceTree = "<group>"; };
 		300 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -62,6 +66,7 @@
 				109 /* StoreManager.swift */,
 				110 /* SystemFolderInfo.swift */,
 				111 /* BookmarkManager.swift */,
+				112 /* DuplicateGroup.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -105,6 +110,7 @@
 				104 /* FileListView.swift */,
 				105 /* UpgradeView.swift */,
 				106 /* MenuBarView.swift */,
+				113 /* DuplicatesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -191,6 +197,8 @@
 				010 /* StoreManager.swift in Sources */,
 				013 /* SystemFolderInfo.swift in Sources */,
 				014 /* BookmarkManager.swift in Sources */,
+				015 /* DuplicateGroup.swift in Sources */,
+				016 /* DuplicatesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

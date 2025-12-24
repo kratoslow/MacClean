@@ -12,8 +12,10 @@ struct ScanControlsView: View {
     @Binding var searchPath: String
     @Binding var minSizeGB: Double
     @Binding var showingUpgradeSheet: Bool
+    @Binding var scanMode: ScanMode
     
     @State private var isHovering = false
+    @State private var isDuplicateHovering = false
     @State private var showingAccessAlert = false
     
     var body: some View {
@@ -75,55 +77,111 @@ struct ScanControlsView: View {
             
             Spacer()
             
-            // Scan button
-            Button(action: startScan) {
-                HStack(spacing: 8) {
-                    if fileScanner.isScanning {
-                        ProgressView()
-                            .scaleEffect(0.7)
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        Text("Scanning...")
-                    } else {
-                        Image(systemName: "magnifyingglass")
-                        Text("Scan for Large Files")
+            // Scan buttons based on mode
+            switch scanMode {
+            case .largeFiles:
+                // Large files scan button
+                Button(action: startScan) {
+                    HStack(spacing: 8) {
+                        if fileScanner.isScanning {
+                            ProgressView()
+                                .scaleEffect(0.7)
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            Text("Scanning...")
+                        } else {
+                            Image(systemName: "magnifyingglass")
+                            Text("Scan for Large Files")
+                        }
                     }
-                }
-                .font(.system(size: 14, weight: .semibold))
-                .foregroundColor(.white)
-                .padding(.horizontal, 20)
-                .padding(.vertical, 12)
-                .background(
-                    LinearGradient(
-                        colors: isHovering ? [Color(hex: "ff6b6b"), Color(hex: "e94560")] : [Color(hex: "e94560"), Color(hex: "c62a47")],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                .shadow(color: Color(hex: "e94560").opacity(0.4), radius: isHovering ? 12 : 6, y: 4)
-            }
-            .buttonStyle(.plain)
-            .disabled(fileScanner.isScanning)
-            .onHover { hovering in
-                withAnimation(.easeInOut(duration: 0.2)) {
-                    isHovering = hovering
-                }
-            }
-            
-            // Stop button (when scanning)
-            if fileScanner.isScanning {
-                Button(action: { fileScanner.stopScanning() }) {
-                    Image(systemName: "stop.fill")
-                        .font(.system(size: 14))
-                        .foregroundColor(.white)
-                        .padding(12)
-                        .background(
-                            Circle()
-                                .fill(Color(hex: "ff5f57"))
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 12)
+                    .background(
+                        LinearGradient(
+                            colors: isHovering ? [Color(hex: "ff6b6b"), Color(hex: "e94560")] : [Color(hex: "e94560"), Color(hex: "c62a47")],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
                         )
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .shadow(color: Color(hex: "e94560").opacity(0.4), radius: isHovering ? 12 : 6, y: 4)
                 }
                 .buttonStyle(.plain)
-                .help("Stop scanning")
+                .disabled(fileScanner.isScanning)
+                .onHover { hovering in
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        isHovering = hovering
+                    }
+                }
+                
+                // Stop button (when scanning)
+                if fileScanner.isScanning {
+                    Button(action: { fileScanner.stopScanning() }) {
+                        Image(systemName: "stop.fill")
+                            .font(.system(size: 14))
+                            .foregroundColor(.white)
+                            .padding(12)
+                            .background(
+                                Circle()
+                                    .fill(Color(hex: "ff5f57"))
+                            )
+                    }
+                    .buttonStyle(.plain)
+                    .help("Stop scanning")
+                }
+                
+            case .duplicates:
+                // Duplicates scan button
+                Button(action: startDuplicateScan) {
+                    HStack(spacing: 8) {
+                        if fileScanner.isScanningDuplicates {
+                            ProgressView()
+                                .scaleEffect(0.7)
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            Text("Finding Duplicates...")
+                        } else {
+                            Image(systemName: "doc.on.doc.fill")
+                            Text("Scan for Duplicates")
+                        }
+                    }
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 12)
+                    .background(
+                        LinearGradient(
+                            colors: isDuplicateHovering ? [Color(hex: "c084fc"), Color(hex: "a855f7")] : [Color(hex: "a855f7"), Color(hex: "7c3aed")],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .shadow(color: Color(hex: "a855f7").opacity(0.4), radius: isDuplicateHovering ? 12 : 6, y: 4)
+                }
+                .buttonStyle(.plain)
+                .disabled(fileScanner.isScanningDuplicates)
+                .onHover { hovering in
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        isDuplicateHovering = hovering
+                    }
+                }
+                
+                // Stop button (when scanning duplicates)
+                if fileScanner.isScanningDuplicates {
+                    Button(action: { fileScanner.stopDuplicateScan() }) {
+                        Image(systemName: "stop.fill")
+                            .font(.system(size: 14))
+                            .foregroundColor(.white)
+                            .padding(12)
+                            .background(
+                                Circle()
+                                    .fill(Color(hex: "ff5f57"))
+                            )
+                    }
+                    .buttonStyle(.plain)
+                    .help("Stop scanning")
+                }
             }
         }
         .padding(16)
@@ -177,13 +235,37 @@ struct ScanControlsView: View {
         let minBytes = Int64(minSizeGB * 1024 * 1024 * 1024)
         fileScanner.startScanning(path: searchPath, minSize: minBytes)
     }
+    
+    func startDuplicateScan() {
+        // Check if we have access to this path
+        if !bookmarkManager.hasAccess(to: searchPath) {
+            showingAccessAlert = true
+            return
+        }
+        
+        // Check if user has scans remaining or is pro
+        if !storeManager.isPurchased && storeManager.remainingFreeScans <= 0 {
+            showingUpgradeSheet = true
+            return
+        }
+        
+        // Use a scan if not pro
+        if !storeManager.isPurchased {
+            storeManager.useFreeScan()
+        }
+        
+        // Start the duplicate scan with min size of 1KB to skip tiny files
+        // Using a smaller threshold since duplicates of any size are relevant
+        fileScanner.startDuplicateScan(path: searchPath, minSize: 1024)
+    }
 }
 
 #Preview {
     ScanControlsView(
         searchPath: .constant("/"),
         minSizeGB: .constant(0.1),
-        showingUpgradeSheet: .constant(false)
+        showingUpgradeSheet: .constant(false),
+        scanMode: .constant(.largeFiles)
     )
     .environmentObject(FileScanner.shared)
     .environmentObject(StoreManager.shared)

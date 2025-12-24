@@ -5,17 +5,32 @@
 
 import SwiftUI
 
+enum ScanMode: String, CaseIterable {
+    case largeFiles = "Large Files"
+    case duplicates = "Duplicates"
+    
+    var icon: String {
+        switch self {
+        case .largeFiles: return "externaldrive.fill"
+        case .duplicates: return "doc.on.doc.fill"
+        }
+    }
+}
+
 struct ContentView: View {
     @EnvironmentObject var storeManager: StoreManager
     @EnvironmentObject var fileScanner: FileScanner
     @EnvironmentObject var bookmarkManager: BookmarkManager
     @State private var selectedFiles: Set<ScannedFile.ID> = []
+    @State private var selectedDuplicates: Set<ScannedFile.ID> = []
     @State private var showingDeleteConfirmation = false
+    @State private var showingDuplicateDeleteConfirmation = false
     @State private var showingUpgradeSheet = false
     // Use real home directory (not sandbox container)
     @State private var searchPath = NSHomeDirectory().replacingOccurrences(of: "/Library/Containers/com.idevelopmentllc.MacCoolClean/Data", with: "")
     @State private var minSizeGB: Double = 0.1
     @State private var isHovering = false
+    @State private var scanMode: ScanMode = .largeFiles
     
     var body: some View {
         ZStack {
@@ -42,7 +57,8 @@ struct ContentView: View {
                         searchPath: $searchPath,
                         minSizeGB: $minSizeGB,
                         onNavigate: navigateToPath,
-                        showingUpgradeSheet: $showingUpgradeSheet
+                        showingUpgradeSheet: $showingUpgradeSheet,
+                        scanMode: $scanMode
                     )
                     .frame(width: 260)
                     
@@ -57,26 +73,42 @@ struct ContentView: View {
                         StorageOverviewCard()
                             .padding()
                         
+                        // Scan mode tabs
+                        ScanModeTabsView(scanMode: $scanMode)
+                            .padding(.horizontal)
+                            .padding(.bottom, 12)
+                        
                         // Scan controls
                         ScanControlsView(
                             searchPath: $searchPath,
                             minSizeGB: $minSizeGB,
-                            showingUpgradeSheet: $showingUpgradeSheet
+                            showingUpgradeSheet: $showingUpgradeSheet,
+                            scanMode: $scanMode
                         )
                         .padding(.horizontal)
                         
                         // Show onboarding if no folders accessible
-                        if bookmarkManager.accessibleFolders.isEmpty && fileScanner.scannedFiles.isEmpty && !fileScanner.isScanning {
+                        if bookmarkManager.accessibleFolders.isEmpty && fileScanner.scannedFiles.isEmpty && fileScanner.duplicateGroups.isEmpty && !fileScanner.isScanning && !fileScanner.isScanningDuplicates {
                             OnboardingView(searchPath: $searchPath)
                         } else {
-                            // File list
-                            FileListView(
-                                selectedFiles: $selectedFiles,
-                                showingDeleteConfirmation: $showingDeleteConfirmation,
-                                currentPath: $searchPath,
-                                onDrillDown: drillIntoFolder
-                            )
-                            .padding()
+                            // Content based on scan mode
+                            switch scanMode {
+                            case .largeFiles:
+                                FileListView(
+                                    selectedFiles: $selectedFiles,
+                                    showingDeleteConfirmation: $showingDeleteConfirmation,
+                                    currentPath: $searchPath,
+                                    onDrillDown: drillIntoFolder
+                                )
+                                .padding()
+                                
+                            case .duplicates:
+                                DuplicatesView(
+                                    selectedDuplicates: $selectedDuplicates,
+                                    showingDeleteConfirmation: $showingDuplicateDeleteConfirmation
+                                )
+                                .padding()
+                            }
                         }
                     }
                 }
@@ -93,6 +125,14 @@ struct ContentView: View {
             }
         } message: {
             Text("This action cannot be undone. \(selectedFiles.count) file(s) will be moved to Trash.")
+        }
+        .alert("Delete Selected Duplicates?", isPresented: $showingDuplicateDeleteConfirmation) {
+            Button("Cancel", role: .cancel) { }
+            Button("Delete", role: .destructive) {
+                deleteSelectedDuplicates()
+            }
+        } message: {
+            Text("This action cannot be undone. \(selectedDuplicates.count) duplicate file(s) will be moved to Trash.")
         }
         .onAppear {
             // Set initial path if we have accessible folders
@@ -132,6 +172,115 @@ struct ContentView: View {
         }
         
         selectedFiles.removeAll()
+    }
+    
+    func deleteSelectedDuplicates() {
+        for group in fileScanner.duplicateGroups {
+            for file in group.files {
+                if selectedDuplicates.contains(file.id) {
+                    fileScanner.deleteDuplicateFile(file, from: group.id)
+                }
+            }
+        }
+        
+        selectedDuplicates.removeAll()
+    }
+}
+
+// MARK: - Scan Mode Tabs
+
+struct ScanModeTabsView: View {
+    @Binding var scanMode: ScanMode
+    @EnvironmentObject var fileScanner: FileScanner
+    
+    var body: some View {
+        HStack(spacing: 0) {
+            ForEach(ScanMode.allCases, id: \.self) { mode in
+                ScanModeTab(
+                    mode: mode,
+                    isSelected: scanMode == mode,
+                    badgeCount: badgeCount(for: mode),
+                    onSelect: {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            scanMode = mode
+                        }
+                    }
+                )
+            }
+            
+            Spacer()
+        }
+    }
+    
+    func badgeCount(for mode: ScanMode) -> Int? {
+        switch mode {
+        case .largeFiles:
+            return fileScanner.scannedFiles.isEmpty ? nil : fileScanner.scannedFiles.count
+        case .duplicates:
+            return fileScanner.duplicateGroups.isEmpty ? nil : fileScanner.duplicateGroups.count
+        }
+    }
+}
+
+struct ScanModeTab: View {
+    let mode: ScanMode
+    let isSelected: Bool
+    let badgeCount: Int?
+    let onSelect: () -> Void
+    
+    @State private var isHovering = false
+    
+    var body: some View {
+        Button(action: onSelect) {
+            HStack(spacing: 8) {
+                Image(systemName: mode.icon)
+                    .font(.system(size: 14))
+                
+                Text(mode.rawValue)
+                    .font(.system(size: 13, weight: isSelected ? .semibold : .medium))
+                
+                // Badge
+                if let count = badgeCount {
+                    Text("\(count)")
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(
+                            Capsule()
+                                .fill(isSelected ? Color(hex: "e94560") : Color.white.opacity(0.3))
+                        )
+                }
+            }
+            .foregroundColor(isSelected ? .white : .white.opacity(0.6))
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            .background(
+                ZStack {
+                    if isSelected {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(
+                                LinearGradient(
+                                    colors: [Color(hex: "e94560").opacity(0.3), Color(hex: "a855f7").opacity(0.2)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                    } else if isHovering {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color.white.opacity(0.05))
+                    }
+                }
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(isSelected ? Color(hex: "e94560").opacity(0.5) : Color.clear, lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+        .onHover { hovering in
+            isHovering = hovering
+        }
     }
 }
 
@@ -285,8 +434,10 @@ struct SidebarView: View {
     @Binding var minSizeGB: Double
     let onNavigate: (String) -> Void
     @Binding var showingUpgradeSheet: Bool
+    @Binding var scanMode: ScanMode
     @EnvironmentObject var storeManager: StoreManager
     @EnvironmentObject var bookmarkManager: BookmarkManager
+    @EnvironmentObject var fileScanner: FileScanner
     
     // Real home directory (not sandbox container)
     private var realHomeDir: String {
@@ -339,11 +490,37 @@ struct SidebarView: View {
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("QUICK LOCATIONS")
+                    // TOOLS Section
+                    Text("TOOLS")
                         .font(.system(size: 11, weight: .semibold))
                         .foregroundColor(.white.opacity(0.5))
                         .padding(.horizontal, 16)
                         .padding(.top, 16)
+                        .padding(.bottom, 8)
+                    
+                    // Find Duplicates
+                    SidebarToolButton(
+                        name: "Find Duplicates",
+                        icon: "doc.on.doc.fill",
+                        color: Color(hex: "a855f7"),
+                        isSelected: scanMode == .duplicates,
+                        badge: fileScanner.duplicateGroups.isEmpty ? nil : fileScanner.duplicateGroups.count,
+                        onSelect: {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                scanMode = .duplicates
+                            }
+                        }
+                    )
+                    
+                    Divider()
+                        .background(Color.white.opacity(0.1))
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 16)
+                    
+                    Text("QUICK LOCATIONS")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundColor(.white.opacity(0.5))
+                        .padding(.horizontal, 16)
                         .padding(.bottom, 8)
                     
                     // All locations (predefined + custom)
@@ -353,8 +530,11 @@ struct SidebarView: View {
                             path: location.path,
                             icon: location.icon,
                             isAccessible: bookmarkManager.hasAccess(to: location.path),
-                            isSelected: searchPath == location.path,
-                            onSelect: { selectLocation(location.path) }
+                            isSelected: scanMode == .largeFiles && searchPath == location.path,
+                            onSelect: { 
+                                scanMode = .largeFiles
+                                selectLocation(location.path) 
+                            }
                         )
                     }
                     
@@ -414,6 +594,67 @@ struct SidebarView: View {
     func addFolder() {
         if let url = bookmarkManager.requestFolderAccess(message: "Select a folder to add for scanning") {
             searchPath = url.path
+        }
+    }
+}
+
+// MARK: - Sidebar Tool Button
+
+struct SidebarToolButton: View {
+    let name: String
+    let icon: String
+    let color: Color
+    let isSelected: Bool
+    let badge: Int?
+    let onSelect: () -> Void
+    
+    @State private var isHovering = false
+    
+    var body: some View {
+        Button(action: onSelect) {
+            HStack(spacing: 12) {
+                // Icon with colored background
+                ZStack {
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(color.opacity(isSelected ? 0.3 : 0.15))
+                        .frame(width: 28, height: 28)
+                    
+                    Image(systemName: icon)
+                        .font(.system(size: 14))
+                        .foregroundColor(color)
+                }
+                
+                Text(name)
+                    .font(.system(size: 13, weight: isSelected ? .semibold : .medium))
+                    .foregroundColor(isSelected ? .white : .white.opacity(0.8))
+                
+                Spacer()
+                
+                // Badge
+                if let count = badge {
+                    Text("\(count)")
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(
+                            Capsule()
+                                .fill(color)
+                        )
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            .contentShape(Rectangle())
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(isSelected ? color.opacity(0.2) : (isHovering ? Color.white.opacity(0.05) : Color.clear))
+                    .padding(.horizontal, 8)
+            )
+        }
+        .buttonStyle(.plain)
+        .onHover { hovering in
+            isHovering = hovering
         }
     }
 }

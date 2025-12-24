@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iDevelopment LLC - Native Mac Apps Built with SwiftUI</title>
+    <meta name="description" content="iDevelopment LLC builds SwiftUI exclusive native applications for Mac that make using your Mac easier and more streamlined.">
+    <link rel="icon" type="image/png" href="images/app-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <span class="logo-icon">✦</span>
+                <span class="logo-text">iDevelopment</span>
+                <span class="logo-llc">LLC</span>
+            </a>
+            <div class="nav-links">
+                <a href="#apps">Apps</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-icon">🍎</span>
+                    <span>Native Mac Apps</span>
+                </div>
+                <h1>Beautiful Apps for <span class="gradient-text">Your Mac</span></h1>
+                <p class="hero-subtitle">We build SwiftUI exclusive native applications that make using your Mac easier, faster, and more delightful.</p>
+                <div class="hero-buttons">
+                    <a href="#apps" class="btn btn-primary">
+                        <span>Explore Our Apps</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-cards">
+                    <div class="card card-1">
+                        <img src="images/app-icon.png" alt="MacCoolClean Icon">
+                    </div>
+                    <div class="card card-2">
+                        <span class="card-icon">⚡</span>
+                        <span class="card-text">SwiftUI</span>
+                    </div>
+                    <div class="card card-3">
+                        <span class="card-icon">🛡️</span>
+                        <span class="card-text">Native</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Apps Section -->
+    <section id="apps" class="apps-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Our Apps</span>
+                <h2>Meet <span class="gradient-text">MacCoolClean</span></h2>
+                <p>Our flagship application for keeping your Mac clean and running smoothly.</p>
+            </div>
+
+            <!-- App Showcase -->
+            <div class="app-showcase">
+                <div class="app-info">
+                    <div class="app-header">
+                        <img src="images/app-icon.png" alt="MacCoolClean" class="app-icon-large">
+                        <div>
+                            <h3>MacCoolClean</h3>
+                            <p class="app-tagline">The smarter way to clean your Mac</p>
+                        </div>
+                    </div>
+                    
+                    <p class="app-description">
+                        MacCoolClean is a powerful yet beautiful utility that helps you find and remove large files, 
+                        detect duplicates, and reclaim precious storage space on your Mac. Built entirely with SwiftUI 
+                        for a native macOS experience.
+                    </p>
+
+                    <div class="features-grid">
+                        <div class="feature">
+                            <div class="feature-icon">📊</div>
+                            <div>
+                                <h4>Storage Overview</h4>
+                                <p>See your disk usage at a glance with beautiful visualizations</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">🔍</div>
+                            <div>
+                                <h4>Find Large Files</h4>
+                                <p>Quickly locate space-hogging files and folders</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">📑</div>
+                            <div>
+                                <h4>Duplicate Finder</h4>
+                                <p>Detect and remove duplicate files to save space</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">🛡️</div>
+                            <div>
+                                <h4>Safe & Secure</h4>
+                                <p>Sandboxed and privacy-focused. Your files never leave your Mac</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://apps.apple.com/app/maccoolclean" class="btn btn-appstore" target="_blank">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                        </svg>
+                        <div>
+                            <span class="small">Download on the</span>
+                            <span class="large">Mac App Store</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Screenshots Carousel -->
+                <div class="screenshots-container">
+                    <div class="screenshots-wrapper">
+                        <div class="screenshot active">
+                            <img src="images/image1.png" alt="MacCoolClean Screenshot 1">
+                        </div>
+                        <div class="screenshot">
+                            <img src="images/image2.png" alt="MacCoolClean Screenshot 2">
+                        </div>
+                        <div class="screenshot">
+                            <img src="images/image3.png" alt="MacCoolClean Screenshot 3">
+                        </div>
+                        <div class="screenshot">
+                            <img src="images/image4.png" alt="MacCoolClean Screenshot 4">
+                        </div>
+                        <div class="screenshot">
+                            <img src="images/image5.png" alt="MacCoolClean Screenshot 5">
+                        </div>
+                    </div>
+                    <div class="screenshot-dots">
+                        <button class="dot active" data-index="0"></button>
+                        <button class="dot" data-index="1"></button>
+                        <button class="dot" data-index="2"></button>
+                        <button class="dot" data-index="3"></button>
+                        <button class="dot" data-index="4"></button>
+                    </div>
+                    <div class="screenshot-nav">
+                        <button class="nav-btn prev">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M15 18l-6-6 6-6"/>
+                            </svg>
+                        </button>
+                        <button class="nav-btn next">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 18l6-6-6-6"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <span class="section-tag">About Us</span>
+                    <h2>Built for <span class="gradient-text">Mac Lovers</span></h2>
+                    <p>
+                        At iDevelopment LLC, we're passionate about creating exceptional software experiences 
+                        for Mac users. We believe that Mac apps should feel like they truly belong on macOS — 
+                        native, fast, and beautiful.
+                    </p>
+                    <p>
+                        That's why we exclusively use SwiftUI to build our applications. No cross-platform 
+                        compromises, no Electron bloat — just pure, native Mac performance with the polish 
+                        that Apple users expect.
+                    </p>
+                    <div class="values">
+                        <div class="value">
+                            <span class="value-icon">🎯</span>
+                            <div>
+                                <h4>Native First</h4>
+                                <p>100% SwiftUI for true Mac performance</p>
+                            </div>
+                        </div>
+                        <div class="value">
+                            <span class="value-icon">✨</span>
+                            <div>
+                                <h4>Beautiful Design</h4>
+                                <p>Apps that look and feel like macOS</p>
+                            </div>
+                        </div>
+                        <div class="value">
+                            <span class="value-icon">🔒</span>
+                            <div>
+                                <h4>Privacy Focused</h4>
+                                <p>Your data stays on your device</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="code-window">
+                        <div class="window-header">
+                            <div class="window-dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <span class="window-title">MacCoolCleanApp.swift</span>
+                        </div>
+                        <pre class="code-content"><code><span class="keyword">import</span> <span class="type">SwiftUI</span>
+
+<span class="keyword">@main</span>
+<span class="keyword">struct</span> <span class="type">MacCoolCleanApp</span>: <span class="type">App</span> {
+    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">Scene</span> {
+        <span class="type">WindowGroup</span> {
+            <span class="type">ContentView</span>()
+                .<span class="method">environmentObject</span>(scanner)
+        }
+        .<span class="method">windowStyle</span>(.<span class="property">hiddenTitleBar</span>)
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-card">
+                <div class="contact-content">
+                    <span class="section-tag">Get in Touch</span>
+                    <h2>Have Questions?</h2>
+                    <p>We'd love to hear from you. Whether you need support, have feedback, or just want to say hello — reach out anytime.</p>
+                    
+                    <a href="mailto:support@idevelopmentllc.tech" class="contact-email">
+                        <div class="email-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="email-label">Email us at</span>
+                            <span class="email-address">support@idevelopmentllc.tech</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="contact-visual">
+                    <div class="support-graphic">
+                        <div class="circle circle-1"></div>
+                        <div class="circle circle-2"></div>
+                        <div class="circle circle-3"></div>
+                        <span class="support-icon">💬</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <span class="logo-icon">✦</span>
+                        <span class="logo-text">iDevelopment</span>
+                        <span class="logo-llc">LLC</span>
+                    </a>
+                    <p>Building beautiful native Mac apps with SwiftUI.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Apps</h4>
+                        <a href="#apps">MacCoolClean</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="#about">About</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <a href="privacy.html">Privacy Policy</a>
+                        <a href="terms.html">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 iDevelopment LLC. All rights reserved.</p>
+                <p>Made with ❤️ for Mac</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

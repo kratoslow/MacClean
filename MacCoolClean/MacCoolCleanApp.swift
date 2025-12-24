@@ -40,7 +40,12 @@ struct MacCoolCleanApp: App {
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate {
+    static var shared: AppDelegate?
+    var mainWindow: NSWindow?
+    
     func applicationDidFinishLaunching(_ notification: Notification) {
+        AppDelegate.shared = self
+        
         // App is sandboxed - folder access is granted per-folder via the Open Panel
         // No need to request Full Disk Access
         
@@ -55,12 +60,38 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
             return event
         }
+        
+        // Capture the main window reference
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.mainWindow = NSApplication.shared.windows.first(where: { $0.level == .normal })
+        }
     }
     
     func applicationWillTerminate(_ notification: Notification) {
         // Clean up security-scoped resource access
         Task { @MainActor in
             BookmarkManager.shared.stopAccessingAll()
+        }
+    }
+    
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        // When dock icon is clicked or app is reopened, show the main window
+        showMainWindow()
+        return true
+    }
+    
+    @objc func showMainWindow() {
+        NSApplication.shared.activate(ignoringOtherApps: true)
+        
+        // Try to find and show the main window
+        if let window = mainWindow, window.isVisible == false {
+            window.makeKeyAndOrderFront(nil)
+        } else if let window = NSApplication.shared.windows.first(where: { $0.level == .normal }) {
+            window.makeKeyAndOrderFront(nil)
+            mainWindow = window
+        } else {
+            // No window exists, create a new one by unhiding
+            NSApp.unhide(nil)
         }
     }
 }

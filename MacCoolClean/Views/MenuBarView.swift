@@ -215,12 +215,13 @@ struct MenuBarView: View {
     }
     
     func openMainWindow() {
-        if let window = NSApplication.shared.windows.first(where: { $0.title.isEmpty || $0.title == "MacCoolClean" }) {
-            window.makeKeyAndOrderFront(nil)
-            NSApplication.shared.activate(ignoringOtherApps: true)
+        // Use the AppDelegate to show the main window
+        if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
+            appDelegate.showMainWindow()
         } else {
-            // Try to bring any window to front
+            // Fallback: just activate the app
             NSApplication.shared.activate(ignoringOtherApps: true)
+            NSApp.unhide(nil)
         }
     }
 }

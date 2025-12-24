@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  MacCoolClean
+//  CoolClean
 //
 
 import SwiftUI
@@ -27,7 +27,7 @@ struct ContentView: View {
     @State private var showingDuplicateDeleteConfirmation = false
     @State private var showingUpgradeSheet = false
     // Use real home directory (not sandbox container)
-    @State private var searchPath = NSHomeDirectory().replacingOccurrences(of: "/Library/Containers/com.idevelopmentllc.MacCoolClean/Data", with: "")
+    @State private var searchPath = NSHomeDirectory().replacingOccurrences(of: "/Library/Containers/com.idevelopmentllc.CoolClean/Data", with: "")
     @State private var minSizeGB: Double = 0.1
     @State private var isHovering = false
     @State private var scanMode: ScanMode = .largeFiles
@@ -322,7 +322,7 @@ struct OnboardingView: View {
                     .font(.system(size: 24, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                 
-                Text("MacCoolClean needs your permission to scan folders.\nSelect a folder to get started.")
+                Text("CoolClean needs your permission to scan folders.\nSelect a folder to get started.")
                     .font(.system(size: 14))
                     .foregroundColor(.white.opacity(0.6))
                     .multilineTextAlignment(.center)
@@ -407,7 +407,7 @@ struct TitleBarView: View {
                         )
                     )
                 
-                Text("MacCoolClean")
+                Text("CoolClean")
                     .font(.system(size: 18, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
             }
@@ -441,7 +441,7 @@ struct SidebarView: View {
     
     // Real home directory (not sandbox container)
     private var realHomeDir: String {
-        NSHomeDirectory().replacingOccurrences(of: "/Library/Containers/com.idevelopmentllc.MacCoolClean/Data", with: "")
+        NSHomeDirectory().replacingOccurrences(of: "/Library/Containers/com.idevelopmentllc.CoolClean/Data", with: "")
     }
     
     // Predefined quick locations
@@ -565,7 +565,7 @@ struct SidebarView: View {
             
             // Version info
             VStack(spacing: 4) {
-                Text("MacCoolClean v1.0")
+                Text("CoolClean v1.0")
                     .font(.system(size: 11, weight: .medium))
                     .foregroundColor(.white.opacity(0.4))
                 Text("Made with ❤️ for Mac")

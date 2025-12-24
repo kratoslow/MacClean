@@ -1,6 +1,6 @@
 //
 //  DuplicatesView.swift
-//  MacCoolClean
+//  CoolClean
 //
 //  View for displaying and managing duplicate files
 //
@@ -255,6 +255,13 @@ struct DuplicateGroupCard: View {
     
     @State private var isHovering = false
     @State private var showingDeleteAlert = false
+    @State private var showingSensitivityInfo = false
+    
+    // Get sensitivity info for the first file (representative of the group)
+    var groupSensitivity: SystemFolderInfo? {
+        guard let firstFile = group.files.first else { return nil }
+        return SystemFolderInfo.getInfo(for: firstFile.path)
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -279,10 +286,17 @@ struct DuplicateGroupCard: View {
                     
                     // Info
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(group.files.first?.name ?? "Unknown")
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundColor(.white)
-                            .lineLimit(1)
+                        HStack(spacing: 8) {
+                            Text(group.files.first?.name ?? "Unknown")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(.white)
+                                .lineLimit(1)
+                            
+                            // Sensitivity badge (clickable)
+                            if let sensitivity = groupSensitivity {
+                                SensitivityBadge(info: sensitivity, showingInfo: $showingSensitivityInfo)
+                            }
+                        }
                         
                         HStack(spacing: 12) {
                             Label("\(group.files.count) copies", systemImage: "doc.on.doc")
@@ -437,6 +451,11 @@ struct DuplicateFileRow: View {
     @EnvironmentObject var fileScanner: FileScanner
     @State private var isHovering = false
     
+    // Get sensitivity info for this specific file
+    var fileSensitivity: SystemFolderInfo? {
+        SystemFolderInfo.getInfo(for: file.path)
+    }
+    
     var body: some View {
         HStack(spacing: 12) {
             // Checkbox (hidden for original)
@@ -470,18 +489,25 @@ struct DuplicateFileRow: View {
                 .frame(width: 60)
             }
             
-            // File path
-            VStack(alignment: .leading, spacing: 2) {
-                Text(file.name)
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(.white)
-                    .lineLimit(1)
+            // File path with sensitivity indicator
+            HStack(spacing: 8) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(file.name)
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(.white)
+                        .lineLimit(1)
+                    
+                    Text(file.path)
+                        .font(.system(size: 10, design: .monospaced))
+                        .foregroundColor(.white.opacity(0.4))
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+                }
                 
-                Text(file.path)
-                    .font(.system(size: 10, design: .monospaced))
-                    .foregroundColor(.white.opacity(0.4))
-                    .lineLimit(1)
-                    .truncationMode(.middle)
+                // Sensitivity indicator (clickable)
+                if let sensitivity = fileSensitivity {
+                    SensitivityIndicator(info: sensitivity)
+                }
             }
             
             Spacer()
@@ -677,6 +703,186 @@ struct DuplicatesEmptyStateView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+// MARK: - Sensitivity Badge (Clickable with Popover)
+
+struct SensitivityBadge: View {
+    let info: SystemFolderInfo
+    @Binding var showingInfo: Bool
+    
+    @State private var isHovering = false
+    
+    var body: some View {
+        Button(action: { showingInfo.toggle() }) {
+            HStack(spacing: 4) {
+                Image(systemName: info.importance.icon)
+                    .font(.system(size: 10, weight: .semibold))
+                
+                Text(info.importance.label)
+                    .font(.system(size: 9, weight: .bold))
+            }
+            .foregroundColor(info.importance.color)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(
+                RoundedRectangle(cornerRadius: 6)
+                    .fill(info.importance.color.opacity(isHovering ? 0.25 : 0.15))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 6)
+                            .stroke(info.importance.color.opacity(0.3), lineWidth: 0.5)
+                    )
+            )
+            .scaleEffect(isHovering ? 1.05 : 1.0)
+        }
+        .buttonStyle(.plain)
+        .onHover { hovering in
+            withAnimation(.easeInOut(duration: 0.15)) {
+                isHovering = hovering
+            }
+        }
+        .popover(isPresented: $showingInfo, arrowEdge: .bottom) {
+            SensitivityInfoPopover(info: info)
+        }
+        .help("Click to learn why this is marked as \(info.importance.label)")
+    }
+}
+
+// MARK: - Sensitivity Info Popover
+
+struct SensitivityInfoPopover: View {
+    let info: SystemFolderInfo
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            // Header
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(info.importance.color.opacity(0.2))
+                        .frame(width: 44, height: 44)
+                    
+                    Image(systemName: info.importance.icon)
+                        .font(.system(size: 20))
+                        .foregroundColor(info.importance.color)
+                }
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(info.importance.label)
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(info.importance.color)
+                    
+                    Text(info.name)
+                        .font(.system(size: 13))
+                        .foregroundColor(.primary)
+                }
+                
+                Spacer()
+            }
+            
+            Divider()
+            
+            // What is this?
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 6) {
+                    Image(systemName: "questionmark.circle.fill")
+                        .foregroundColor(.secondary)
+                    Text("What is this?")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.secondary)
+                }
+                
+                Text(info.description)
+                    .font(.system(size: 13))
+                    .foregroundColor(.primary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            
+            // Why this classification?
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 6) {
+                    Image(systemName: "tag.fill")
+                        .foregroundColor(.secondary)
+                    Text("Why \"\(info.importance.label)\"?")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.secondary)
+                }
+                
+                Text(classificationReason)
+                    .font(.system(size: 13))
+                    .foregroundColor(.primary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            
+            // Recommendation
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 6) {
+                    Image(systemName: "lightbulb.fill")
+                        .foregroundColor(Color(hex: "febc2e"))
+                    Text("Recommendation")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.secondary)
+                }
+                
+                Text(info.recommendation)
+                    .font(.system(size: 13))
+                    .foregroundColor(.primary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(12)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(info.importance.color.opacity(0.1))
+            )
+        }
+        .padding(20)
+        .frame(width: 360)
+    }
+    
+    var classificationReason: String {
+        switch info.importance {
+        case .critical:
+            return "These are core system files that macOS needs to function. Deleting them could break your Mac, prevent it from booting, or require a complete system reinstall."
+        case .important:
+            return "These files are used by applications or system features. Removing them may cause apps to malfunction, lose settings, or require reinstallation."
+        case .caution:
+            return "These are user files or app data that may be important to you. Review carefully before deleting to avoid losing personal data or settings."
+        case .safe:
+            return "These are temporary files, caches, or generated content that can be safely deleted. They will be recreated automatically when needed."
+        }
+    }
+}
+
+// MARK: - Small Sensitivity Indicator (for file rows)
+
+struct SensitivityIndicator: View {
+    let info: SystemFolderInfo
+    @State private var showingInfo = false
+    @State private var isHovering = false
+    
+    var body: some View {
+        Button(action: { showingInfo.toggle() }) {
+            Image(systemName: info.importance.icon)
+                .font(.system(size: 12))
+                .foregroundColor(info.importance.color)
+                .padding(4)
+                .background(
+                    Circle()
+                        .fill(info.importance.color.opacity(isHovering ? 0.3 : 0.15))
+                )
+                .scaleEffect(isHovering ? 1.1 : 1.0)
+        }
+        .buttonStyle(.plain)
+        .onHover { hovering in
+            withAnimation(.easeInOut(duration: 0.15)) {
+                isHovering = hovering
+            }
+        }
+        .popover(isPresented: $showingInfo, arrowEdge: .trailing) {
+            SensitivityInfoPopover(info: info)
+        }
+        .help(info.importance.label)
     }
 }
 

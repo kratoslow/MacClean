@@ -56,5 +56,5 @@ done
 echo "✅ Done! Check the 'resized' folder for your App Store ready screenshots."
 echo ""
 echo "📱 Upload these to App Store Connect:"
-echo "   My Apps → MacCoolClean → macOS Screenshots"
+echo "   My Apps → CoolClean → macOS Screenshots"
 

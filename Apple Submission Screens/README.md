@@ -26,7 +26,7 @@
 - **Maximum:** 10 screenshots per localization
 - **Recommended:** 4-6 screenshots showing key features
 
-## Suggested Screenshots for MacCoolClean
+## Suggested Screenshots for CoolClean
 
 1. **Main Interface** - Show the full app with sidebar and scanned files
 2. **Scanning in Progress** - Show the scanning animation
@@ -56,5 +56,5 @@ Use Preview or an image editor to resize to exact dimensions.
 ```
 
 ## Upload Location
-App Store Connect → My Apps → MacCoolClean → macOS Screenshots
+App Store Connect → My Apps → CoolClean → macOS Screenshots
 

@@ -5,17 +5,17 @@
   ],
   "products" : [
     {
-      "displayPrice" : "0.99",
+      "displayPrice" : "4.99",
       "familyShareable" : false,
       "internalID" : "PRO_LIFETIME_001",
       "localizations" : [
         {
           "description" : "Unlock unlimited scans forever. One-time purchase.",
-          "displayName" : "MacCoolClean Pro - Lifetime",
+          "displayName" : "CoolClean Pro - Lifetime",
           "locale" : "en_US"
         }
       ],
-      "productID" : "com.idevelopmentllc.MacCoolClean.pro.lifetime",
+      "productID" : "com.idevelopmentllc.CoolClean.pro.lifetime",
       "referenceName" : "Pro Lifetime",
       "type" : "NonConsumable"
     }

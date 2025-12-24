@@ -1,6 +1,6 @@
 //
 //  FileScanner.swift
-//  MacCoolClean
+//  CoolClean
 //
 //  Sandbox-compatible file scanner for Mac App Store distribution
 //

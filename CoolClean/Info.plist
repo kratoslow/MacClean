@@ -13,9 +13,9 @@
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>MacCoolClean</string>
+    <string>CoolClean</string>
     <key>CFBundleDisplayName</key>
-    <string>MacCoolClean</string>
+    <string>CoolClean</string>
     <key>CFBundlePackageType</key>
     <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
     <key>CFBundleShortVersionString</key>
@@ -39,21 +39,21 @@
     
     <!-- Privacy permissions -->
     <key>NSAppleEventsUsageDescription</key>
-    <string>MacCoolClean needs to run scripts with administrator privileges to delete protected files.</string>
+    <string>CoolClean needs to run scripts with administrator privileges to delete protected files.</string>
     
     <key>NSDesktopFolderUsageDescription</key>
-    <string>MacCoolClean needs access to scan files on your Desktop.</string>
+    <string>CoolClean needs access to scan files on your Desktop.</string>
     
     <key>NSDocumentsFolderUsageDescription</key>
-    <string>MacCoolClean needs access to scan files in your Documents folder.</string>
+    <string>CoolClean needs access to scan files in your Documents folder.</string>
     
     <key>NSDownloadsFolderUsageDescription</key>
-    <string>MacCoolClean needs access to scan files in your Downloads folder.</string>
+    <string>CoolClean needs access to scan files in your Downloads folder.</string>
     
     <key>NSRemovableVolumesUsageDescription</key>
-    <string>MacCoolClean needs access to scan files on removable volumes.</string>
+    <string>CoolClean needs access to scan files on removable volumes.</string>
     
     <key>NSSystemAdministrationUsageDescription</key>
-    <string>MacCoolClean needs administrator access to delete protected system files.</string>
+    <string>CoolClean needs administrator access to delete protected system files.</string>
 </dict>
 </plist>

@@ -1,6 +1,6 @@
 //
 //  SystemFolderInfo.swift
-//  MacCoolClean
+//  CoolClean
 //
 //  Information about important macOS system folders
 //

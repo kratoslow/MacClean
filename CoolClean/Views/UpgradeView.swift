@@ -1,6 +1,6 @@
 //
 //  UpgradeView.swift
-//  MacCoolClean
+//  CoolClean
 //
 
 import SwiftUI
@@ -95,7 +95,7 @@ struct UpgradeView: View {
                             Text("$")
                                 .font(.system(size: 18, weight: .bold))
                                 .foregroundColor(.white.opacity(0.7))
-                            Text("0.99")
+                            Text("4.99")
                                 .font(.system(size: 38, weight: .bold, design: .rounded))
                                 .foregroundColor(.white)
                         }

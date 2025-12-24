@@ -1,4 +1,4 @@
-# 😎 MacCoolClean
+# 😎 CoolClean
 
 A beautiful macOS native SwiftUI app to help you clean up your Mac and reclaim disk space!
 
@@ -27,7 +27,7 @@ The app features a beautiful dark theme with:
 
 ## Building
 
-1. Open `MacCoolClean.xcodeproj` in Xcode
+1. Open `CoolClean.xcodeproj` in Xcode
 2. Select your team for code signing
 3. Build and run (⌘R)
 
@@ -39,7 +39,7 @@ The app requests access to:
 
 ## In-App Purchase
 
-- **Product ID**: `com.idevelopmentllc.MacCoolClean.pro.lifetime`
+- **Product ID**: `com.idevelopmentllc.CoolClean.pro.lifetime`
 - **Price**: $0.99 (one-time)
 - **Features**: Unlimited scans forever
 

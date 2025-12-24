@@ -1,6 +1,6 @@
 //
 //  StoreManager.swift
-//  MacCoolClean
+//  CoolClean
 //
 
 import Foundation
@@ -11,7 +11,7 @@ class StoreManager: ObservableObject {
     static let shared = StoreManager()
     
     // Product ID for the one-time purchase
-    private let productID = "com.idevelopmentllc.MacCoolClean.pro.lifetime"
+    private let productID = "com.idevelopmentllc.CoolClean.pro.lifetime"
     
     @Published var isPurchased = false
     @Published var remainingFreeScans: Int = 5

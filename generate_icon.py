@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate MacCoolClean app icons from source image
+Generate CoolClean app icons from source image
 """
 
 from PIL import Image
@@ -42,7 +42,7 @@ def create_icons_from_source(source_path):
         'icon_512x512@2x.png': 1024,
     }
     
-    output_dir = "MacCoolClean/Assets.xcassets/AppIcon.appiconset"
+    output_dir = "CoolClean/Assets.xcassets/AppIcon.appiconset"
     os.makedirs(output_dir, exist_ok=True)
     
     print("\n🎨 Generating icon sizes...")

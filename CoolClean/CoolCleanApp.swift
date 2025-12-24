@@ -1,15 +1,15 @@
 //
-//  MacCoolCleanApp.swift
-//  MacCoolClean
+//  CoolCleanApp.swift
+//  CoolClean
 //
-//  A beautiful macOS utility for cleaning up your Mac 😎
+//  A beautiful macOS utility for cleaning up your disk 😎
 //
 
 import SwiftUI
 import StoreKit
 
 @main
-struct MacCoolCleanApp: App {
+struct CoolCleanApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var storeManager = StoreManager.shared
     @StateObject private var fileScanner = FileScanner.shared

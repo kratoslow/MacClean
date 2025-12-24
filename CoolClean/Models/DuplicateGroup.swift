@@ -1,6 +1,6 @@
 //
 //  DuplicateGroup.swift
-//  MacCoolClean
+//  CoolClean
 //
 //  Model representing a group of duplicate files
 

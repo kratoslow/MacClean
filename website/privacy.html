@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - iDevelopment LLC</title>
+    <meta name="description" content="Privacy Policy for ModernClean and other iDevelopment LLC applications. We do not collect any personal data.">
     <link rel="icon" type="image/png" href="images/app-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,6 +29,11 @@
             margin: 40px 0 16px;
             color: var(--accent-primary);
         }
+        .legal-content h3 {
+            font-size: 18px;
+            margin: 24px 0 12px;
+            color: var(--text-primary);
+        }
         .legal-content p, .legal-content li {
             color: var(--text-secondary);
             line-height: 1.8;
@@ -39,6 +45,20 @@
         }
         .legal-content li {
             margin-bottom: 8px;
+        }
+        .legal-content strong {
+            color: var(--text-primary);
+        }
+        .highlight-box {
+            background: rgba(233, 69, 96, 0.1);
+            border-left: 4px solid var(--accent-primary);
+            padding: 20px 24px;
+            border-radius: 0 8px 8px 0;
+            margin: 24px 0;
+        }
+        .highlight-box p {
+            margin-bottom: 0;
+            color: var(--text-primary);
         }
     </style>
 </head>
@@ -61,47 +81,141 @@
 
     <div class="container legal-content">
         <h1>Privacy Policy</h1>
-        <p class="last-updated">Last updated: December 2024</p>
+        <p class="last-updated">Last updated: December 26, 2024</p>
 
-        <p>At iDevelopment LLC, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your information when you use our applications.</p>
+        <div class="highlight-box">
+            <p><strong>Summary:</strong> ModernClean does not collect, store, or transmit any personal data. All file scanning and processing occurs entirely on your device. We have no access to your files, folders, or any personal information.</p>
+        </div>
 
-        <h2>Information We Collect</h2>
-        <p>Our applications are designed with privacy in mind. We collect minimal information necessary to provide our services:</p>
+        <h2>Introduction</h2>
+        <p>iDevelopment LLC ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains our practices regarding data collection and use for our applications, including ModernClean.</p>
+        <p>By using our applications, you agree to the terms of this Privacy Policy. If you do not agree with this policy, please do not use our applications.</p>
+
+        <h2>Information We Do NOT Collect</h2>
+        <p>We want to be completely transparent: <strong>we do not collect any personal information from you.</strong> Specifically, we do not collect:</p>
         <ul>
-            <li><strong>ModernClean:</strong> This app runs entirely on your device. We do not collect, transmit, or store any of your personal files, folder contents, or system information on our servers.</li>
-            <li><strong>Purchase Information:</strong> When you make a purchase through the Mac App Store, Apple handles all payment processing. We receive confirmation of your purchase but do not have access to your payment details.</li>
+            <li>Personal identifiers (name, email address, phone number)</li>
+            <li>Device identifiers or unique device IDs</li>
+            <li>Location data or IP addresses</li>
+            <li>File names, file contents, or folder structures</li>
+            <li>Usage statistics or analytics data</li>
+            <li>Browsing history or search queries</li>
+            <li>Cookies or tracking technologies</li>
+            <li>Any other personal or sensitive information</li>
         </ul>
 
-        <h2>Data Storage</h2>
-        <p>All data processed by our applications remains on your device. We do not:</p>
+        <h2>How Our App Works</h2>
+        <p>ModernClean is designed with privacy as a core principle:</p>
+        
+        <h3>Local Processing Only</h3>
+        <p>All file scanning, duplicate detection, and storage analysis occurs entirely on your Mac. Your files are never uploaded to any server, and we have no ability to access, view, or retrieve any of your data.</p>
+        
+        <h3>No Network Transmission</h3>
+        <p>The app does not transmit any information about your files, folders, or system to external servers. The only network communication that may occur is:</p>
         <ul>
-            <li>Upload your files to any server</li>
-            <li>Track your file system activity</li>
-            <li>Collect analytics about your file contents</li>
-            <li>Share any information with third parties</li>
+            <li>In-App Purchase verification through Apple's App Store (handled entirely by Apple)</li>
+            <li>Checking for app updates through the Mac App Store (handled entirely by Apple)</li>
         </ul>
+        
+        <h3>Sandboxed Application</h3>
+        <p>ModernClean operates within Apple's App Sandbox, meaning it can only access files and folders that you explicitly grant permission to access. This provides an additional layer of security and privacy protection.</p>
 
-        <h2>App Sandboxing</h2>
-        <p>Our applications are sandboxed according to Apple's guidelines. This means they can only access files and folders you explicitly grant permission to access. Your data never leaves your Mac.</p>
+        <h2>In-App Purchases</h2>
+        <p>If you choose to make an in-app purchase:</p>
+        <ul>
+            <li>All payment processing is handled exclusively by Apple through the App Store</li>
+            <li>We do not have access to your payment information, credit card details, or Apple ID</li>
+            <li>We only receive confirmation that a purchase was completed to unlock features</li>
+            <li>Purchase records are stored locally on your device and synced through your iCloud account by Apple</li>
+        </ul>
 
         <h2>Third-Party Services</h2>
-        <p>Our applications do not integrate with third-party analytics, advertising, or tracking services. The only external service used is Apple's StoreKit for in-app purchases, which is governed by Apple's privacy policy.</p>
+        <p>Our applications do not integrate with any third-party analytics, advertising, tracking, or data collection services. We do not use:</p>
+        <ul>
+            <li>Google Analytics or similar tracking tools</li>
+            <li>Facebook SDK or social media trackers</li>
+            <li>Advertising networks or ad tracking</li>
+            <li>Crash reporting services that collect personal data</li>
+            <li>Any third-party SDKs that collect user information</li>
+        </ul>
+        <p>The only third-party service used is Apple's StoreKit framework for in-app purchases, which is governed by <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener" style="color: var(--accent-primary);">Apple's Privacy Policy</a>.</p>
+
+        <h2>Data Storage</h2>
+        <p>Any preferences or settings you configure in the app are stored locally on your device using macOS's standard preferences system. This data:</p>
+        <ul>
+            <li>Never leaves your device</li>
+            <li>Is not accessible to us</li>
+            <li>Can be deleted by uninstalling the application</li>
+        </ul>
 
         <h2>Children's Privacy</h2>
-        <p>Our applications are not directed to children under 13. We do not knowingly collect personal information from children.</p>
+        <p>Our applications are not directed to children under the age of 13. We do not knowingly collect personal information from children under 13. Since we do not collect any personal information from any users, this policy applies equally to all age groups.</p>
+
+        <h2>Data Security</h2>
+        <p>Since we do not collect or store any user data on our servers, there is no risk of your personal information being compromised through a data breach of our systems. Your data remains on your device, protected by your Mac's built-in security features and any additional security measures you have enabled.</p>
+
+        <h2>Your Rights</h2>
+        <p>Because we do not collect personal data, traditional data subject rights (such as access, correction, or deletion requests) do not apply. However, you maintain full control over:</p>
+        <ul>
+            <li><strong>Access permissions:</strong> You can revoke folder access at any time through System Settings > Privacy & Security</li>
+            <li><strong>Local data:</strong> Uninstalling the app removes all locally stored preferences</li>
+            <li><strong>Purchase history:</strong> Managed through your Apple ID account</li>
+        </ul>
+
+        <h2>International Users</h2>
+        <p>Our applications are available worldwide through the Mac App Store. Since we do not collect or transfer any personal data, there are no cross-border data transfer concerns. Users in the European Union, United Kingdom, California, and other jurisdictions with specific privacy laws can use our applications with confidence that their privacy rights are respected.</p>
 
         <h2>Changes to This Policy</h2>
-        <p>We may update this Privacy Policy from time to time. We will notify users of any material changes by updating the "Last updated" date at the top of this policy.</p>
+        <p>We may update this Privacy Policy from time to time. If we make material changes, we will:</p>
+        <ul>
+            <li>Update the "Last updated" date at the top of this policy</li>
+            <li>Post the updated policy on this page</li>
+            <li>If required by law, notify users through the app or other means</li>
+        </ul>
+        <p>We encourage you to review this Privacy Policy periodically for any changes.</p>
 
         <h2>Contact Us</h2>
-        <p>If you have any questions about this Privacy Policy, please contact us at:</p>
-        <p><a href="mailto:support@idevelopmentllc.tech" style="color: var(--accent-primary);">support@idevelopmentllc.tech</a></p>
+        <p>If you have any questions, concerns, or requests regarding this Privacy Policy or our privacy practices, please contact us at:</p>
+        <p>
+            <strong>iDevelopment LLC</strong><br>
+            Email: <a href="mailto:support@idevelopmentllc.tech" style="color: var(--accent-primary);">support@idevelopmentllc.tech</a>
+        </p>
+        <p>We will respond to your inquiry as soon as reasonably possible.</p>
+
+        <h2>Governing Law</h2>
+        <p>This Privacy Policy is governed by the laws of the United States. Any disputes arising from this policy will be resolved in accordance with applicable law.</p>
     </div>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <span class="logo-icon">✦</span>
+                        <span class="logo-text">iDevelopment</span>
+                        <span class="logo-llc">LLC</span>
+                    </a>
+                    <p>Building beautiful native Mac apps with SwiftUI.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Apps</h4>
+                        <a href="index.html#apps">ModernClean</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="index.html#about">About</a>
+                        <a href="index.html#contact">Contact</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <a href="privacy.html">Privacy Policy</a>
+                        <a href="terms.html">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
                 <p>&copy; 2024 iDevelopment LLC. All rights reserved.</p>
                 <p>Made with ❤️ for Mac</p>
             </div>
@@ -109,5 +223,3 @@
     </footer>
 </body>
 </html>
-
-

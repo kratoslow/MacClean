@@ -1,6 +1,6 @@
 //
 //  UpgradeView.swift
-//  CoolClean
+//  ModernClean
 //
 
 import SwiftUI

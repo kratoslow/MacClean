@@ -1,6 +1,6 @@
 //
 //  MenuBarView.swift
-//  CoolClean
+//  ModernClean
 //
 
 import SwiftUI
@@ -32,7 +32,7 @@ struct MenuBarView: View {
                         )
                     )
                 
-                Text("CoolClean")
+                Text("ModernClean")
                     .font(.system(size: 14, weight: .bold, design: .rounded))
                 
                 Spacer()
@@ -149,14 +149,14 @@ struct MenuBarView: View {
                     loadStorageInfo()
                 }
                 
-                MenuBarButton(icon: "magnifyingglass", title: "Open CoolClean") {
+                MenuBarButton(icon: "magnifyingglass", title: "Open ModernClean") {
                     openMainWindow()
                 }
                 
                 Divider()
                     .padding(.vertical, 4)
                 
-                MenuBarButton(icon: "xmark.circle", title: "Quit CoolClean") {
+                MenuBarButton(icon: "xmark.circle", title: "Quit ModernClean") {
                     NSApplication.shared.terminate(nil)
                 }
             }

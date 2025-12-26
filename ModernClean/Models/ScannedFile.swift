@@ -1,6 +1,6 @@
 //
 //  ScannedFile.swift
-//  CoolClean
+//  ModernClean
 //
 
 import Foundation

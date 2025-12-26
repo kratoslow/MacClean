@@ -1,6 +1,6 @@
 //
-//  CoolCleanApp.swift
-//  CoolClean
+//  ModernCleanApp.swift
+//  ModernClean
 //
 //  A beautiful macOS utility for cleaning up your disk 😎
 //
@@ -9,7 +9,7 @@ import SwiftUI
 import StoreKit
 
 @main
-struct CoolCleanApp: App {
+struct ModernCleanApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var storeManager = StoreManager.shared
     @StateObject private var fileScanner = FileScanner.shared
@@ -64,18 +64,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Ensure app is a regular foreground app
         NSApp.setActivationPolicy(.regular)
         
-        // Activate immediately
-        NSApplication.shared.activate(ignoringOtherApps: true)
+        // Bring app to foreground with retry logic
+        bringAppToForeground(attempt: 1)
+    }
+    
+    private func bringAppToForeground(attempt: Int) {
+        // Try up to 5 times with increasing delays
+        guard attempt <= 5 else { return }
         
-        // Capture the main window reference and bring app to foreground after window is ready
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.mainWindow = NSApplication.shared.windows.first(where: { $0.level == .normal })
-            
-            // Activate again and bring window to front
+        let delay = Double(attempt) * 0.2 // 0.2, 0.4, 0.6, 0.8, 1.0 seconds
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            // Activate the application
             NSApplication.shared.activate(ignoringOtherApps: true)
-            if let window = self.mainWindow {
+            
+            // Find the main window - try multiple approaches
+            let window = NSApplication.shared.mainWindow 
+                ?? NSApplication.shared.keyWindow
+                ?? NSApplication.shared.windows.first(where: { $0.isVisible && $0.canBecomeKey })
+                ?? NSApplication.shared.windows.first
+            
+            if let window = window {
+                self.mainWindow = window
                 window.makeKeyAndOrderFront(nil)
                 window.orderFrontRegardless()
+                
+                // Force the app to be frontmost
+                NSApplication.shared.activate(ignoringOtherApps: true)
+            } else {
+                // Window not ready yet, try again
+                self.bringAppToForeground(attempt: attempt + 1)
             }
         }
     }

@@ -1,6 +1,6 @@
 //
 //  BookmarkManager.swift
-//  CoolClean
+//  ModernClean
 //
 //  Manages security-scoped bookmarks for sandbox-compatible file access
 //
@@ -117,7 +117,7 @@ class BookmarkManager: ObservableObject {
     func displayName(for url: URL) -> String {
         let path = url.path
         // Use real home directory (not sandbox container)
-        let homeDir = NSHomeDirectory().replacingOccurrences(of: "/Library/Containers/com.idevelopmentllc.CoolClean/Data", with: "")
+        let homeDir = NSHomeDirectory().replacingOccurrences(of: "/Library/Containers/com.idevelopmentllc.ModernClean/Data", with: "")
         
         if path == homeDir {
             return "Home Folder"

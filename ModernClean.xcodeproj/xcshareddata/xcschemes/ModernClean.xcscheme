@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CCC"
-               BuildableName = "CoolClean.app"
-               BlueprintName = "CoolClean"
-               ReferencedContainer = "container:CoolClean.xcodeproj">
+               BuildableName = "ModernClean.app"
+               BlueprintName = "ModernClean"
+               ReferencedContainer = "container:ModernClean.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CCC"
-            BuildableName = "CoolClean.app"
-            BlueprintName = "CoolClean"
-            ReferencedContainer = "container:CoolClean.xcodeproj">
+            BuildableName = "ModernClean.app"
+            BlueprintName = "ModernClean"
+            ReferencedContainer = "container:ModernClean.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -67,9 +67,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CCC"
-            BuildableName = "CoolClean.app"
-            BlueprintName = "CoolClean"
-            ReferencedContainer = "container:CoolClean.xcodeproj">
+            BuildableName = "ModernClean.app"
+            BlueprintName = "ModernClean"
+            ReferencedContainer = "container:ModernClean.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
@@ -81,3 +81,4 @@
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
+

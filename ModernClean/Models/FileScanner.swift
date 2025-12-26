@@ -1,6 +1,6 @@
 //
 //  FileScanner.swift
-//  CoolClean
+//  ModernClean
 //
 //  Sandbox-compatible file scanner for Mac App Store distribution
 //

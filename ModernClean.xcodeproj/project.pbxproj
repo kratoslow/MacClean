@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		001 /* CoolCleanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100 /* CoolCleanApp.swift */; };
+		001 /* ModernCleanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100 /* ModernCleanApp.swift */; };
 		002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101 /* ContentView.swift */; };
 		003 /* StorageOverviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102 /* StorageOverviewCard.swift */; };
 		004 /* ScanControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103 /* ScanControlsView.swift */; };
@@ -26,7 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		100 /* CoolCleanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoolCleanApp.swift; sourceTree = "<group>"; };
+		100 /* ModernCleanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernCleanApp.swift; sourceTree = "<group>"; };
 		101 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		102 /* StorageOverviewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageOverviewCard.swift; sourceTree = "<group>"; };
 		103 /* ScanControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanControlsView.swift; sourceTree = "<group>"; };
@@ -43,8 +43,8 @@
 		200 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		201 /* StoreKit.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreKit.storekit; sourceTree = "<group>"; };
 		300 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		301 /* CoolClean.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CoolClean.entitlements; sourceTree = "<group>"; };
-		AAA /* CoolClean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoolClean.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		301 /* ModernClean.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ModernClean.entitlements; sourceTree = "<group>"; };
+		AAA /* ModernClean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ModernClean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +74,7 @@
 		PRODUCTS /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AAA /* CoolClean.app */,
+				AAA /* ModernClean.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -87,18 +87,18 @@
 			);
 			sourceTree = "<group>";
 		};
-		SRC /* CoolClean */ = {
+		SRC /* ModernClean */ = {
 			isa = PBXGroup;
 			children = (
-				100 /* CoolCleanApp.swift */,
+				100 /* ModernCleanApp.swift */,
 				VIEWS /* Views */,
 				MODELS /* Models */,
 				200 /* Assets.xcassets */,
 				201 /* StoreKit.storekit */,
 				300 /* Info.plist */,
-				301 /* CoolClean.entitlements */,
+				301 /* ModernClean.entitlements */,
 			);
-			path = CoolClean;
+			path = ModernClean;
 			sourceTree = "<group>";
 		};
 		VIEWS /* Views */ = {
@@ -118,9 +118,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CCC /* CoolClean */ = {
+		CCC /* ModernClean */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FFF /* Build configuration list for PBXNativeTarget "CoolClean" */;
+			buildConfigurationList = FFF /* Build configuration list for PBXNativeTarget "ModernClean" */;
 			buildPhases = (
 				DDD /* Sources */,
 				BBB /* Frameworks */,
@@ -130,9 +130,9 @@
 			);
 			dependencies = (
 			);
-			name = CoolClean;
-			productName = CoolClean;
-			productReference = AAA /* CoolClean.app */;
+			name = ModernClean;
+			productName = ModernClean;
+			productReference = AAA /* ModernClean.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -150,7 +150,7 @@
 					};
 				};
 			};
-			buildConfigurationList = GGG /* Build configuration list for PBXProject "CoolClean" */;
+			buildConfigurationList = GGG /* Build configuration list for PBXProject "ModernClean" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -163,7 +163,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CCC /* CoolClean */,
+				CCC /* ModernClean */,
 			);
 		};
 /* End PBXProject section */
@@ -185,7 +185,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				001 /* CoolCleanApp.swift in Sources */,
+				001 /* ModernCleanApp.swift in Sources */,
 				002 /* ContentView.swift in Sources */,
 				003 /* StorageOverviewCard.swift in Sources */,
 				004 /* ScanControlsView.swift in Sources */,
@@ -273,7 +273,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = CoolClean/CoolClean.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ModernClean/ModernClean.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -282,7 +282,7 @@
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = CoolClean/Info.plist;
+				INFOPLIST_FILE = ModernClean/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -291,7 +291,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.idevelopmentllc.CoolClean;
+				PRODUCT_BUNDLE_IDENTIFIER = com.idevelopmentllc.ModernClean;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -359,7 +359,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = CoolClean/CoolClean.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ModernClean/ModernClean.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -367,7 +367,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = CoolClean/Info.plist;
+				INFOPLIST_FILE = ModernClean/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -376,7 +376,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.idevelopmentllc.CoolClean;
+				PRODUCT_BUNDLE_IDENTIFIER = com.idevelopmentllc.ModernClean;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -386,7 +386,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FFF /* Build configuration list for PBXNativeTarget "CoolClean" */ = {
+		FFF /* Build configuration list for PBXNativeTarget "ModernClean" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DEBUG_TARGET /* Debug */,
@@ -395,7 +395,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		GGG /* Build configuration list for PBXProject "CoolClean" */ = {
+		GGG /* Build configuration list for PBXProject "ModernClean" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DEBUG_PROJECT /* Debug */,

@@ -1,6 +1,6 @@
 //
 //  SystemFolderInfo.swift
-//  CoolClean
+//  ModernClean
 //
 //  Information about important macOS system folders
 //

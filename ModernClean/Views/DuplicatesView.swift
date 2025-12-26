@@ -1,6 +1,6 @@
 //
 //  DuplicatesView.swift
-//  CoolClean
+//  ModernClean
 //
 //  View for displaying and managing duplicate files
 //

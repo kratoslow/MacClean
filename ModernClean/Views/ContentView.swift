@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  CoolClean
+//  ModernClean
 //
 
 import SwiftUI
@@ -27,7 +27,7 @@ struct ContentView: View {
     @State private var showingDuplicateDeleteConfirmation = false
     @State private var showingUpgradeSheet = false
     // Use real home directory (not sandbox container)
-    @State private var searchPath = NSHomeDirectory().replacingOccurrences(of: "/Library/Containers/com.idevelopmentllc.CoolClean/Data", with: "")
+    @State private var searchPath = NSHomeDirectory().replacingOccurrences(of: "/Library/Containers/com.idevelopmentllc.ModernClean/Data", with: "")
     @State private var minSizeGB: Double = 0.1
     @State private var isHovering = false
     @State private var scanMode: ScanMode = .largeFiles
@@ -200,6 +200,8 @@ struct ScanModeTabsView: View {
                     mode: mode,
                     isSelected: scanMode == mode,
                     badgeCount: badgeCount(for: mode),
+                    isScanning: isScanning(for: mode),
+                    scanProgress: scanProgress(for: mode),
                     onSelect: {
                         withAnimation(.easeInOut(duration: 0.2)) {
                             scanMode = mode
@@ -220,27 +222,95 @@ struct ScanModeTabsView: View {
             return fileScanner.duplicateGroups.isEmpty ? nil : fileScanner.duplicateGroups.count
         }
     }
+    
+    func isScanning(for mode: ScanMode) -> Bool {
+        switch mode {
+        case .largeFiles:
+            return fileScanner.isScanning
+        case .duplicates:
+            return fileScanner.isScanningDuplicates
+        }
+    }
+    
+    func scanProgress(for mode: ScanMode) -> Double {
+        switch mode {
+        case .largeFiles:
+            return fileScanner.scanProgress
+        case .duplicates:
+            return fileScanner.duplicateScanProgress
+        }
+    }
 }
 
 struct ScanModeTab: View {
     let mode: ScanMode
     let isSelected: Bool
     let badgeCount: Int?
+    let isScanning: Bool
+    let scanProgress: Double
     let onSelect: () -> Void
     
     @State private var isHovering = false
+    @State private var isSpinning = false
     
     var body: some View {
         Button(action: onSelect) {
             HStack(spacing: 8) {
-                Image(systemName: mode.icon)
-                    .font(.system(size: 14))
+                // Show spinner when scanning this mode, otherwise show icon
+                if isScanning {
+                    ZStack {
+                        // Progress ring
+                        Circle()
+                            .stroke(Color.white.opacity(0.2), lineWidth: 2)
+                            .frame(width: 16, height: 16)
+                        
+                        Circle()
+                            .trim(from: 0, to: scanProgress)
+                            .stroke(
+                                mode == .duplicates ? Color(hex: "a855f7") : Color(hex: "e94560"),
+                                style: StrokeStyle(lineWidth: 2, lineCap: .round)
+                            )
+                            .frame(width: 16, height: 16)
+                            .rotationEffect(.degrees(-90))
+                        
+                        // Spinning indicator overlay
+                        Circle()
+                            .trim(from: 0, to: 0.3)
+                            .stroke(Color.white.opacity(0.6), style: StrokeStyle(lineWidth: 2, lineCap: .round))
+                            .frame(width: 16, height: 16)
+                            .rotationEffect(.degrees(isSpinning ? 360 : 0))
+                            .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: isSpinning)
+                    }
+                    .onAppear { isSpinning = true }
+                    .onDisappear { isSpinning = false }
+                } else {
+                    Image(systemName: mode.icon)
+                        .font(.system(size: 14))
+                }
                 
                 Text(mode.rawValue)
                     .font(.system(size: 13, weight: isSelected ? .semibold : .medium))
                 
-                // Badge
-                if let count = badgeCount {
+                // Badge or scanning indicator
+                if isScanning {
+                    Text("\(Int(scanProgress * 100))%")
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(
+                            Capsule()
+                                .fill(
+                                    LinearGradient(
+                                        colors: mode == .duplicates 
+                                            ? [Color(hex: "a855f7"), Color(hex: "6366f1")]
+                                            : [Color(hex: "e94560"), Color(hex: "ff6b6b")],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                        )
+                } else if let count = badgeCount {
                     Text("\(count)")
                         .font(.system(size: 10, weight: .bold))
                         .foregroundColor(.white)
@@ -322,7 +392,7 @@ struct OnboardingView: View {
                     .font(.system(size: 24, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                 
-                Text("CoolClean needs your permission to scan folders.\nSelect a folder to get started.")
+                Text("ModernClean needs your permission to scan folders.\nSelect a folder to get started.")
                     .font(.system(size: 14))
                     .foregroundColor(.white.opacity(0.6))
                     .multilineTextAlignment(.center)
@@ -407,7 +477,7 @@ struct TitleBarView: View {
                         )
                     )
                 
-                Text("CoolClean")
+                Text("ModernClean")
                     .font(.system(size: 18, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
             }
@@ -441,7 +511,7 @@ struct SidebarView: View {
     
     // Real home directory (not sandbox container)
     private var realHomeDir: String {
-        NSHomeDirectory().replacingOccurrences(of: "/Library/Containers/com.idevelopmentllc.CoolClean/Data", with: "")
+        NSHomeDirectory().replacingOccurrences(of: "/Library/Containers/com.idevelopmentllc.ModernClean/Data", with: "")
     }
     
     // Predefined quick locations
@@ -565,7 +635,7 @@ struct SidebarView: View {
             
             // Version info
             VStack(spacing: 4) {
-                Text("CoolClean v1.0")
+                Text("ModernClean v1.0")
                     .font(.system(size: 11, weight: .medium))
                     .foregroundColor(.white.opacity(0.4))
                 Text("Made with ❤️ for Mac")

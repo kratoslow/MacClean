@@ -55,5 +55,8 @@
     
     <key>NSSystemAdministrationUsageDescription</key>
     <string>ModernClean needs administrator access to delete protected system files.</string>
+    
+    <key>NSAppleMusicUsageDescription</key>
+    <string>ModernClean scans your Music folder to identify large audio files and duplicates you may want to remove. For example, the app will show the file size of songs and podcasts to help you reclaim storage space.</string>
 </dict>
 </plist>

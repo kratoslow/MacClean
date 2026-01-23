@@ -10,8 +10,8 @@ import StoreKit
 class StoreManager: ObservableObject {
     static let shared = StoreManager()
     
-    // Product ID for the one-time purchase
-    private let productID = "com.idevelopmentllc.ModernClean.prolifetime"
+    // Product ID for the one-time purchase (v1.0)
+    private let productID = "com.idevelopmentllc.ModernClean.prolifetime.v1_0"
     
     @Published var isPurchased = false
     @Published var remainingFreeScans: Int = 5

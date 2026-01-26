@@ -23,6 +23,17 @@
 		014 /* BookmarkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111 /* BookmarkManager.swift */; };
 		015 /* DuplicateGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112 /* DuplicateGroup.swift */; };
 		016 /* DuplicatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113 /* DuplicatesView.swift */; };
+		3B8E44DF2F25424000830ABD /* ScannedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107 /* ScannedFile.swift */; };
+		3B8E44E02F25425000830ABD /* DuplicateGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112 /* DuplicateGroup.swift */; };
+		3B8E44E12F25425D00830ABD /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109 /* StoreManager.swift */; };
+		3B8E44E22F25426800830ABD /* FileScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108 /* FileScanner.swift */; };
+		3B8E44E32F25427300830ABD /* SystemFolderInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110 /* SystemFolderInfo.swift */; };
+		3B8E44E42F2542B100830ABD /* StoreKit.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 201 /* StoreKit.storekit */; };
+		3B8E44E62F25445C00830ABD /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E44E52F25445C00830ABD /* Color+Hex.swift */; };
+		3B8E44E72F25445C00830ABD /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E44E52F25445C00830ABD /* Color+Hex.swift */; };
+		3B8E44EC2F25448500830ABD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B8E44E82F25448500830ABD /* Assets.xcassets */; };
+		3B8E44ED2F25448500830ABD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E44E92F25448500830ABD /* ContentView.swift */; };
+		3B8E44EE2F25448500830ABD /* ModernClean_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E44EA2F25448500830ABD /* ModernClean_iOSApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,10 +55,22 @@
 		201 /* StoreKit.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreKit.storekit; sourceTree = "<group>"; };
 		300 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		301 /* ModernClean.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ModernClean.entitlements; sourceTree = "<group>"; };
+		3B8E44D42F25418100830ABD /* ModernClean-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ModernClean-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B8E44E52F25445C00830ABD /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
+		3B8E44E82F25448500830ABD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3B8E44E92F25448500830ABD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		3B8E44EA2F25448500830ABD /* ModernClean_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernClean_iOSApp.swift; sourceTree = "<group>"; };
 		AAA /* ModernClean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ModernClean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3B8E44D12F25418100830ABD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BBB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -58,6 +81,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B8E44EB2F25448500830ABD /* ModernClean-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				3B8E44E82F25448500830ABD /* Assets.xcassets */,
+				3B8E44E92F25448500830ABD /* ContentView.swift */,
+				3B8E44EA2F25448500830ABD /* ModernClean_iOSApp.swift */,
+			);
+			path = "ModernClean-iOS";
+			sourceTree = "<group>";
+		};
 		MODELS /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -75,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				AAA /* ModernClean.app */,
+				3B8E44D42F25418100830ABD /* ModernClean-iOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -82,6 +116,8 @@
 		ROOT = {
 			isa = PBXGroup;
 			children = (
+				3B8E44EB2F25448500830ABD /* ModernClean-iOS */,
+				3B8E44E52F25445C00830ABD /* Color+Hex.swift */,
 				SRC /* ModernClean */,
 				PRODUCTS /* Products */,
 			);
@@ -118,6 +154,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3B8E44D32F25418100830ABD /* ModernClean-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3B8E44DE2F25418200830ABD /* Build configuration list for PBXNativeTarget "ModernClean-iOS" */;
+			buildPhases = (
+				3B8E44D02F25418100830ABD /* Sources */,
+				3B8E44D12F25418100830ABD /* Frameworks */,
+				3B8E44D22F25418100830ABD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ModernClean-iOS";
+			packageProductDependencies = (
+			);
+			productName = "ModernClean-iOS";
+			productReference = 3B8E44D42F25418100830ABD /* ModernClean-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 		CCC /* ModernClean */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FFF /* Build configuration list for PBXNativeTarget "ModernClean" */;
@@ -142,9 +197,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					3B8E44D32F25418100830ABD = {
+						CreatedOnToolsVersion = 26.2;
+					};
 					CCC = {
 						CreatedOnToolsVersion = 15.0;
 					};
@@ -164,11 +222,21 @@
 			projectRoot = "";
 			targets = (
 				CCC /* ModernClean */,
+				3B8E44D32F25418100830ABD /* ModernClean-iOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3B8E44D22F25418100830ABD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B8E44EC2F25448500830ABD /* Assets.xcassets in Resources */,
+				3B8E44E42F2542B100830ABD /* StoreKit.storekit in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EEE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -181,6 +249,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3B8E44D02F25418100830ABD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B8E44E72F25445C00830ABD /* Color+Hex.swift in Sources */,
+				3B8E44ED2F25448500830ABD /* ContentView.swift in Sources */,
+				3B8E44EE2F25448500830ABD /* ModernClean_iOSApp.swift in Sources */,
+				3B8E44E32F25427300830ABD /* SystemFolderInfo.swift in Sources */,
+				3B8E44E22F25426800830ABD /* FileScanner.swift in Sources */,
+				3B8E44E12F25425D00830ABD /* StoreManager.swift in Sources */,
+				3B8E44DF2F25424000830ABD /* ScannedFile.swift in Sources */,
+				3B8E44E02F25425000830ABD /* DuplicateGroup.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DDD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -190,6 +273,7 @@
 				003 /* StorageOverviewCard.swift in Sources */,
 				004 /* ScanControlsView.swift in Sources */,
 				005 /* FileListView.swift in Sources */,
+				3B8E44E62F25445C00830ABD /* Color+Hex.swift in Sources */,
 				006 /* UpgradeView.swift in Sources */,
 				007 /* MenuBarView.swift in Sources */,
 				008 /* ScannedFile.swift in Sources */,
@@ -205,6 +289,75 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		3B8E44DC2F25418200830ABD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S4TE75J7Z3;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.idevelopmentllc.ModernClean.ModernClean-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3B8E44DD2F25418200830ABD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S4TE75J7Z3;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.idevelopmentllc.ModernClean.ModernClean-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		DEBUG_PROJECT /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -388,6 +541,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3B8E44DE2F25418200830ABD /* Build configuration list for PBXNativeTarget "ModernClean-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3B8E44DC2F25418200830ABD /* Debug */,
+				3B8E44DD2F25418200830ABD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FFF /* Build configuration list for PBXNativeTarget "ModernClean" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

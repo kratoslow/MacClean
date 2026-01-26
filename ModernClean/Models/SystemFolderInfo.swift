@@ -93,6 +93,108 @@ struct SystemFolderInfo {
     
     // MARK: - System Folders Database
     
+    #if os(iOS)
+    // iOS Folder Database
+    private static let systemFolders: [String: SystemFolderInfo] = [
+        // User accessible folders
+        "Documents": SystemFolderInfo(
+            importance: .caution,
+            name: "Documents",
+            description: "Your personal documents and app data stored in the Files app.",
+            recommendation: "Review contents carefully. May contain important documents."
+        ),
+        "Downloads": SystemFolderInfo(
+            importance: .safe,
+            name: "Downloads",
+            description: "Downloaded files from Safari, Mail, and other apps.",
+            recommendation: "Often contains forgotten downloads. Safe to clean regularly!"
+        ),
+        "iCloud Drive": SystemFolderInfo(
+            importance: .caution,
+            name: "iCloud Drive",
+            description: "Files synced across all your Apple devices via iCloud.",
+            recommendation: "⚠️ Deleting here removes from ALL your devices!"
+        ),
+        "On My iPhone": SystemFolderInfo(
+            importance: .caution,
+            name: "On My iPhone",
+            description: "Files stored locally on your device, not synced to iCloud.",
+            recommendation: "Safe to clean but check if you need files elsewhere."
+        ),
+        "On My iPad": SystemFolderInfo(
+            importance: .caution,
+            name: "On My iPad",
+            description: "Files stored locally on your device, not synced to iCloud.",
+            recommendation: "Safe to clean but check if you need files elsewhere."
+        ),
+        // App-specific folders commonly seen
+        "Podcasts": SystemFolderInfo(
+            importance: .safe,
+            name: "Podcasts",
+            description: "Downloaded podcast episodes.",
+            recommendation: "Safe to delete! Episodes can be re-downloaded."
+        ),
+        "Music": SystemFolderInfo(
+            importance: .caution,
+            name: "Music",
+            description: "Downloaded music and Apple Music content.",
+            recommendation: "Delete with caution. Purchased music can be re-downloaded."
+        ),
+        "Photos": SystemFolderInfo(
+            importance: .important,
+            name: "Photos",
+            description: "Your photo library and downloaded images.",
+            recommendation: "⚠️ These may be irreplaceable! Ensure backups exist."
+        ),
+        "Videos": SystemFolderInfo(
+            importance: .caution,
+            name: "Videos",
+            description: "Video files and downloaded movies.",
+            recommendation: "Large files! Safe to delete if you don't need them."
+        ),
+        // Common cache/temp patterns
+        "Caches": SystemFolderInfo(
+            importance: .safe,
+            name: "App Caches",
+            description: "Temporary cached data from apps.",
+            recommendation: "Safe to delete. Apps will recreate as needed."
+        ),
+        "tmp": SystemFolderInfo(
+            importance: .safe,
+            name: "Temporary Files",
+            description: "Temporary files that can be safely removed.",
+            recommendation: "Safe to delete. Often cleaned automatically."
+        ),
+    ]
+    
+    private static let patternFolders: [String: SystemFolderInfo] = [
+        "Attachments": SystemFolderInfo(
+            importance: .safe,
+            name: "Message Attachments",
+            description: "Photos and files received in Messages.",
+            recommendation: "Can be very large! Safe to delete old attachments."
+        ),
+        "Recordings": SystemFolderInfo(
+            importance: .caution,
+            name: "Voice Recordings",
+            description: "Voice memos and audio recordings.",
+            recommendation: "Check if you need these before deleting."
+        ),
+        "Backup": SystemFolderInfo(
+            importance: .caution,
+            name: "Backup Files",
+            description: "Backup data from various apps.",
+            recommendation: "May contain important backups. Review carefully."
+        ),
+        "Export": SystemFolderInfo(
+            importance: .safe,
+            name: "Exported Files",
+            description: "Files exported from apps for sharing.",
+            recommendation: "Usually temporary exports. Safe to clean."
+        ),
+    ]
+    #else
+    // macOS Folder Database
     private static let systemFolders: [String: SystemFolderInfo] = [
         // Critical System Folders
         "/System": SystemFolderInfo(
@@ -448,5 +550,6 @@ struct SystemFolderInfo {
             recommendation: "Safe to delete. Can be recreated with requirements.txt."
         ),
     ]
+    #endif
 }
 

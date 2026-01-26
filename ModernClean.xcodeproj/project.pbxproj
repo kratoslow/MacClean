@@ -32,8 +32,13 @@
 		3B8E44E62F25445C00830ABD /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E44E52F25445C00830ABD /* Color+Hex.swift */; };
 		3B8E44E72F25445C00830ABD /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E44E52F25445C00830ABD /* Color+Hex.swift */; };
 		3B8E44EC2F25448500830ABD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B8E44E82F25448500830ABD /* Assets.xcassets */; };
-		3B8E44ED2F25448500830ABD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E44E92F25448500830ABD /* ContentView.swift */; };
-		3B8E44EE2F25448500830ABD /* ModernClean_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E44EA2F25448500830ABD /* ModernClean_iOSApp.swift */; };
+		3B8E44ED2F25448500830ABD /* ContentView_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E44E92F25448500830ABD /* ContentView_iOS.swift */; };
+		3B8E44EE2F25448500830ABD /* ModernCleanApp_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E44EA2F25448500830ABD /* ModernCleanApp_iOS.swift */; };
+		3B8E44EF2F25448500830ABD /* FolderAccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E44F02F25448500830ABD /* FolderAccessManager.swift */; };
+		3B8E44F12F25448500830ABD /* FileListView_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E44F22F25448500830ABD /* FileListView_iOS.swift */; };
+		3B8E44F32F25448500830ABD /* DuplicatesListView_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E44F42F25448500830ABD /* DuplicatesListView_iOS.swift */; };
+		3B8E44F52F25448500830ABD /* StorageOverviewCard_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E44F62F25448500830ABD /* StorageOverviewCard_iOS.swift */; };
+		3B8E44F72F25448500830ABD /* UpgradeView_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8E44F82F25448500830ABD /* UpgradeView_iOS.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,8 +63,13 @@
 		3B8E44D42F25418100830ABD /* ModernClean-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ModernClean-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B8E44E52F25445C00830ABD /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		3B8E44E82F25448500830ABD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3B8E44E92F25448500830ABD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		3B8E44EA2F25448500830ABD /* ModernClean_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernClean_iOSApp.swift; sourceTree = "<group>"; };
+		3B8E44E92F25448500830ABD /* ContentView_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView_iOS.swift; sourceTree = "<group>"; };
+		3B8E44EA2F25448500830ABD /* ModernCleanApp_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernCleanApp_iOS.swift; sourceTree = "<group>"; };
+		3B8E44F02F25448500830ABD /* FolderAccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderAccessManager.swift; sourceTree = "<group>"; };
+		3B8E44F22F25448500830ABD /* FileListView_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileListView_iOS.swift; sourceTree = "<group>"; };
+		3B8E44F42F25448500830ABD /* DuplicatesListView_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatesListView_iOS.swift; sourceTree = "<group>"; };
+		3B8E44F62F25448500830ABD /* StorageOverviewCard_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageOverviewCard_iOS.swift; sourceTree = "<group>"; };
+		3B8E44F82F25448500830ABD /* UpgradeView_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeView_iOS.swift; sourceTree = "<group>"; };
 		AAA /* ModernClean.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ModernClean.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -85,8 +95,13 @@
 			isa = PBXGroup;
 			children = (
 				3B8E44E82F25448500830ABD /* Assets.xcassets */,
-				3B8E44E92F25448500830ABD /* ContentView.swift */,
-				3B8E44EA2F25448500830ABD /* ModernClean_iOSApp.swift */,
+				3B8E44EA2F25448500830ABD /* ModernCleanApp_iOS.swift */,
+				3B8E44F02F25448500830ABD /* FolderAccessManager.swift */,
+				3B8E44E92F25448500830ABD /* ContentView_iOS.swift */,
+				3B8E44F22F25448500830ABD /* FileListView_iOS.swift */,
+				3B8E44F42F25448500830ABD /* DuplicatesListView_iOS.swift */,
+				3B8E44F62F25448500830ABD /* StorageOverviewCard_iOS.swift */,
+				3B8E44F82F25448500830ABD /* UpgradeView_iOS.swift */,
 			);
 			path = "ModernClean-iOS";
 			sourceTree = "<group>";
@@ -254,8 +269,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B8E44E72F25445C00830ABD /* Color+Hex.swift in Sources */,
-				3B8E44ED2F25448500830ABD /* ContentView.swift in Sources */,
-				3B8E44EE2F25448500830ABD /* ModernClean_iOSApp.swift in Sources */,
+				3B8E44ED2F25448500830ABD /* ContentView_iOS.swift in Sources */,
+				3B8E44EE2F25448500830ABD /* ModernCleanApp_iOS.swift in Sources */,
+				3B8E44EF2F25448500830ABD /* FolderAccessManager.swift in Sources */,
+				3B8E44F12F25448500830ABD /* FileListView_iOS.swift in Sources */,
+				3B8E44F32F25448500830ABD /* DuplicatesListView_iOS.swift in Sources */,
+				3B8E44F52F25448500830ABD /* StorageOverviewCard_iOS.swift in Sources */,
+				3B8E44F72F25448500830ABD /* UpgradeView_iOS.swift in Sources */,
 				3B8E44E32F25427300830ABD /* SystemFolderInfo.swift in Sources */,
 				3B8E44E22F25426800830ABD /* FileScanner.swift in Sources */,
 				3B8E44E12F25425D00830ABD /* StoreManager.swift in Sources */,
